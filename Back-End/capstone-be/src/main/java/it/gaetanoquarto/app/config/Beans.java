@@ -20,10 +20,11 @@ public class Beans {
 	
 	@Bean
 	@Scope("prototype")
-	public Utente utente(String nome, String cognome, String username, String email, String password) {
+	public Utente utente(String nome, String cognome, String username, String email, String password, Provincia provincia) {
 		return Utente.builder()
 				.nome(nome)
 				.cognome(cognome)
+				.residenza(provincia)
 				.username(username)
 				.email(email)
 				.password(password)

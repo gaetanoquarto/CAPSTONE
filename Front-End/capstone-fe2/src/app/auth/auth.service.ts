@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Provincia } from '../models/provincia.interface';
 
 const url = 'http://localhost:8080/auth/login/';
 
@@ -24,7 +25,7 @@ export class AuthService {
     );
   }
 
-  register(data: {nome: string, cognome: string, username: string, email: string, password: string }): Observable<any> {
+  register(data: any): Observable<any> {
     return this.http.post(
       'http://localhost:8080/auth/registrazione',
       data,

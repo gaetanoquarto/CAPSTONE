@@ -12,10 +12,9 @@
           <label for="cognome"><i class="bi bi-person"></i>Cognome</label>
         </div>
         <div class="form-floating form-group mb-3">
-          <input name="residenza" type="text" class="form-control" id="residenza" placeholder="Residenza" (keyup)="searchOnKeyUp($event)" list="SearchResults" required ngModel>
-          <datalist id="SearchResults">
-            <option *ngFor="let sr of results" value="{{sr.id}}" [value]="sr.provincia">{{sr.provincia}}</option>
-         </datalist>
+          <select name="residenza" id="residenza" class="form-select" placeholder="Residenza" required ngModel>
+            <option *ngFor="let p of arrayProvince" value="{{p | json}}">{{p.provincia}}</option>
+          </select>
          <label for="residenza"><i class="bi bi-person"></i>Residenza</label>
         </div>
         <div class="form-floating form-group mb-3">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Provincia } from 'src/app/models/provincia.interface';
 import { ProvinciaService } from 'src/app/services/provincia.service';
 import { AuthService } from '../auth.service';
 
@@ -11,43 +12,32 @@ import { AuthService } from '../auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  results: any[] = [];
-	searchResults: any[] = [];
+	arrayProvince: Provincia[] = [];
 
   constructor(private usrv: AuthService, private router: Router, private provsrv: ProvinciaService) { }
 
   ngOnInit(): void {
-    this.getSearchResults();
+    this.getCitta();
   }
 
-  getSearchResults(): void {
-		this.provsrv.getProvince().subscribe(sr => {Object.assign(this.searchResults, sr);
+  getCitta(): void {
+		this.provsrv.getProvince().subscribe(resp => {
+      Object.assign(this.arrayProvince, resp);
     });
 	}
 
-	searchOnKeyUp(event: any) {
-		let input = event.target.value;
-		//console.log('event.target.value: ' + input);
-		//console.log('this.searchResults: ' + this.searchResults);
-		if (input.length > 1) {
-			this.results = this.searchFromArray(this.searchResults, input);
-		}
-	}
-
-	searchFromArray(arr: any[], regex: any) {
-		let matches = [], i;
-		for (i = 0; i < arr.length; i++) {
-			if (arr[i].provincia.match(regex)) {
-				matches.push(arr[i]);
-			}
-		}
-		console.log('matches: ' + matches);
-		return matches;
-	};
-
   async onsubmit(form: NgForm) {
+    let provincia: Provincia = JSON.parse(form.value.residenza)
+   let data = {
+    nome: form.value.nome,
+    cognome: form.value.cognome,
+    residenza: provincia,
+    username: form.value.username,
+    email: form.value.email,
+    password: form.value.password
+    }
     try {
-      await this.usrv.register(form.value).subscribe({
+      await this.usrv.register(data).subscribe({
         next: data => {
           console.log(data);
           this.router.navigate(['/login'])
