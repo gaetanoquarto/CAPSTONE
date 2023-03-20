@@ -82,6 +82,7 @@ public class UtenteController {
 		utente.setNome(_utente.getNome());
 		utente.setCognome(_utente.getCognome());
 		utente.setResidenza(_utente.getResidenza());
+		utente.setImmagineProfilo(_utente.getImmagineProfilo());
 		utente.setRuoli(_utente.getRuoli());
 		
 		us.save(utente);

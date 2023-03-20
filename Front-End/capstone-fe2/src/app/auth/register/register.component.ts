@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
 	}
 
   async onsubmit(form: NgForm) {
-    let provincia: Provincia = JSON.parse(form.value.residenza)
+    let provincia: Provincia = JSON.parse(form.value.residenza);
    let data = {
     nome: form.value.nome,
     cognome: form.value.cognome,

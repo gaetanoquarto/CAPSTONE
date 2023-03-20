@@ -1,5 +1,6 @@
 package it.gaetanoquarto.app.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.gaetanoquarto.app.entities.CentroSportivo;
 import it.gaetanoquarto.app.entities.Partita;
+import it.gaetanoquarto.app.entities.Provincia;
 import it.gaetanoquarto.app.services.PartitaService;
 
 @RestController
@@ -74,10 +78,10 @@ public class PartitaController {
 		
 		partita.setCentroSportivo(_partita.getCentroSportivo());
 		partita.setNomePartita(_partita.getNomePartita());
-		partita.setMaxPartecipanti(_partita.getMaxPartecipanti());
 		partita.setTipoPartita(_partita.getTipoPartita());
 		partita.setGiornoPartita(_partita.getGiornoPartita());
 		partita.setOraPartita(_partita.getOraPartita());
+		partita.setListaPartecipanti(_partita.getListaPartecipanti());
 		ps.save(partita);
 		
 		return new ResponseEntity<Object>(partita, HttpStatus.CREATED);
@@ -95,6 +99,11 @@ public class PartitaController {
 		return new ResponseEntity<>(
 			String.format("La partita con id %d è stata eliminata!", id), HttpStatus.OK	
 		);
+	}
+	
+	@GetMapping("partite/ricerca")
+	public List<Partita> cercaPerCittaAndGiorno(@RequestParam("citta") String citta, @RequestParam("giorno") String giorno) {
+		return ps.getByCittaAndGiorno(citta, giorno);
 	}
 	
 	

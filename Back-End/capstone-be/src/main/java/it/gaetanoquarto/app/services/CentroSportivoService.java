@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import it.gaetanoquarto.app.entities.CentroSportivo;
+import it.gaetanoquarto.app.entities.Provincia;
 import it.gaetanoquarto.app.repositories.CentroSportivoRepo;
 
 @Service
@@ -35,5 +36,9 @@ public class CentroSportivoService {
 	
 	public void delete(CentroSportivo cs) {
 		csr.delete(cs);
+	}
+	
+	public List<CentroSportivo> getByCitta(Provincia citta) {
+		return csr.findByCittaCentroSportivo(citta);
 	}
 }

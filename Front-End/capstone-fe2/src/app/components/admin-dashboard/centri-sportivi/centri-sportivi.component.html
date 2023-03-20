@@ -1,0 +1,63 @@
+<!-- Modal -->
+<div class="modal fade" id="crea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Crea centro sportivo</h1>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm" (ngSubmit)="onsubmit(form)">
+          <div class="form-floating form-group mb-3">
+            <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome" required ngModel>
+            <label for="nome"><i class="bi bi-person"></i> Nome</label>
+          </div>
+          <div class="form-floating form-group mb-3">
+            <select name="provincia" id="provincia" class="form-select" placeholder="Provincia" required ngModel>
+              <option *ngFor="let p of arrayProvince" value="{{p | json}}">{{p.provincia}}</option>
+            </select>
+           <label for="residenza"><i class="bi bi-person"></i>Città</label>
+          </div>
+          <div class="form-floating form-group mb-3">
+            <input name="indirizzo" type="text" class="form-control" id="indirizzo" placeholder="Indirizzo" required ngModel>
+            <label for="indirizzo"><i class="bi bi-person"></i>Indirizzo</label>
+          </div>
+          <div>
+            <p class="mb-1 h5 text-center">Seleziona campi</p>
+            <div *ngFor="let campi of listaCampi" class="form-check form-check-inline mb-3">
+              <input class="form-check-input" type="checkbox" id="checkbox1" name="{{campi.tipoCampo}}" value="{{campi}}" ngModel>
+              <label class="form-check-label" for="{{campi.tipoCampo}}">{{campi.tipoCampo}}</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success rounded-5 px-5" [disabled]="form.invalid" data-bs-dismiss="modal">Crea</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crea">crea</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Città</th>
+        <th scope="col">Indirizzo</th>
+        <th scope="col">Campi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cs of listaCentriSportivi">
+        <th scope="row">{{cs.id}}</th>
+        <td>{{cs.nomeCentroSportivo}}</td>
+        <td>{{cs.cittaCentroSportivo.provincia}}</td>
+        <td>{{cs.indirizzo}}</td>
+        <td>
+          <select name="" id="">
+          <option *ngFor="let csc of cs.listaCampi">{{csc.tipoCampo}}</option>
+        </select></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

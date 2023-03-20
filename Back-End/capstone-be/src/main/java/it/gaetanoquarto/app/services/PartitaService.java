@@ -1,5 +1,6 @@
 package it.gaetanoquarto.app.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,10 @@ public class PartitaService {
 	
 	public void delete(Partita p) {
 		pr.delete(p);
+	}
+	
+	public List<Partita> getByCittaAndGiorno(String citta, String giorno) {
+		return pr.findByCittaAndGiornoPartita(citta, LocalDate.parse(giorno));
 	}
 
 }

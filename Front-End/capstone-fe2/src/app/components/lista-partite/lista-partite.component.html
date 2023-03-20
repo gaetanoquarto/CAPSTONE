@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row justify-content-center d-flex">
+    <div class="col">
+      <div class="form-floating form-group mb-3">
+        <select name="residenza" id="residenza" class="form-select" placeholder="Residenza" required [(ngModel)]="residenzaSelezionata" (ngModelChange)="getPartite()">
+          <option *ngFor="let p of arrayProvince" [ngValue]="p">{{p.provincia}}</option>
+        </select>
+       <label for="residenza">Zona</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating form-group mb-3">
+        <input style="width: 100%; height: 5vh;" type="date" id="dateStandard" name="dateStandard" [(ngModel)]="todayDate" (ngModelChange)="getPartite()">
+    </div>
+    </div>
+</div>
+
+<div class="container">
+
+  <div class="text-center mb-3 mt-3">
+    <a class="btn btn-primary" [routerLink]="['/crea-partita']">Crea Partita</a>
+  </div>
+
+  <h2 *ngIf="vuoto" class="text-center">NESSUNA PARTITA DISPONIBILE!</h2>
+
+  <div *ngIf="!vuoto">
+  <div  *ngFor="let partite of arrayPartite" class="card">
+    <div class="card-header">
+      {{partite.nomePartita}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Centro Sportivo: {{partite.centroSportivo.nomeCentroSportivo}} - {{partite.citta}}</h5>
+      <p class="card-text">Campo: {{partite.campo}}</p>
+      <p class="card-text">Data: {{partite.giornoPartita}} ore: {{partite.oraPartita}}</p>
+      <p class="card-text">Organizzata da: {{partite.organizzatore.username}}</p>
+      <p class="card-text">partecipanti: {{numeroPartecipanti}} di {{partite.campo === 'CALCIOA5' ? '10': partite.campo === 'CALCIOA6' ? '12' : partite.campo === 'CALCIOA7' ? '14' : 0}}</p>
+      <a *ngIf="!partecipanteEsistente" class="btn btn-primary" (click)="partecipaPartita(partite.id)">partecipa</a>
+      <a *ngIf="partecipanteEsistente && !organizzatore" class="btn btn-danger" (click)="annullaPrenotazione(partite.id)">Annulla prenotazione</a>
+      <a *ngIf="organizzatore" class="btn btn-warning">Gestisci Partita</a>
+      <a *ngIf="organizzatore" class="btn btn-danger">Annulla partita</a>
+    </div>
+  </div>
+</div>
+</div>
+</div>

@@ -42,6 +42,7 @@ public class Utente {
 	private String nome;
 	private String cognome;
 	private String password;
+	private String immagineProfilo;
 	
 	@OneToOne
 	private Provincia residenza;

@@ -7,11 +7,27 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthRoutingModule } from './auth/auth-routing.module';
+import { HomeComponent } from './components/home/home.component';
+import { ProfiloComponent } from './components/profilo/profilo.component';
+import { ListaPartiteComponent } from './components/lista-partite/lista-partite.component';
+import { GestionePartitaComponent } from './components/gestione-partita/gestione-partita.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { CentriSportiviComponent } from './components/admin-dashboard/centri-sportivi/centri-sportivi.component';
+import { CreaPartitaComponent } from './components/crea-partita/crea-partita.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    ProfiloComponent,
+    ListaPartiteComponent,
+    GestionePartitaComponent,
+    NavbarComponent,
+    AdminDashboardComponent,
+    CentriSportiviComponent,
+    CreaPartitaComponent
   ],
   imports: [
     BrowserModule,

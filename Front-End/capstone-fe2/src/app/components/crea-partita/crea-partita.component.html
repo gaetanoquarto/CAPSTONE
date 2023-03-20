@@ -1,0 +1,72 @@
+<div container-fluid>
+
+  <div class="card">
+    <div class="card-header">
+      Crea partita
+    </div>
+    <div class="card-body">
+      <form class="mb-3" #scegliCitta="ngForm" (ngSubmit)="trovaCentri(scegliCitta)">
+        <div class="form-floating form-group mb-3">
+          <select name="citta" id="citta" class="form-select" placeholder="Città" required ngModel>
+            <option *ngFor="let p of arrayProvince" value="{{p | json}}">{{p.provincia}}</option>
+          </select>
+         <label for="citta"><i class="bi bi-person"></i>Residenza</label>
+        </div>
+        <button type="submit" class="btn btn-success rounded-5 px-5" [disabled]="scegliCitta.invalid">seleziona città</button>
+      </form>
+
+      <!-- FORM CARICAMENTO DATI -->
+      <form *ngIf="mostraForm" #form="ngForm" (ngSubmit)="onsubmit(form)">
+         <div class="form-floating form-group mb-3">
+          <select name="centroSportivo" id="centroSportivo" class="form-select" placeholder="centroSportivo" required ngModel (change)="getCampiFromCentri()" [(ngModel)]="centroSportivoSelezionato">
+            <option *ngFor="let c of listaCentriSportivi" value="{{c | json}}">{{c.nomeCentroSportivo}}</option>
+          </select>
+          <label for="centroSportivo">Seleziona Centro Sportivo</label>
+          </div>
+         <div class="form-floating form-group mb-3">
+          <select name="campo" id="campo" class="form-select" placeholder="campo" required ngModel>
+            <option *ngFor="let campo of listaCampi" value="{{campo.tipoCampo}}">{{campo.tipoCampo}}</option>
+          </select>
+          <label for="centroSportivo">Seleziona Campo</label>
+          </div>
+        <div class="form-group mb-3">
+          <label for="date">Seleziona giorno</label>
+          <input name="giorno" id="giorno" placeholder="Giorno" type="date" id="date" required ngModel>
+        </div>
+        <div class="form-floating form-group mb-3">
+          <select name="orario" id="orario" class="form-select" placeholder="Orario" required ngModel>
+            <option value="10.00-11.00">10.00-11.00</option>
+            <option value="11.00-12.00">11.00-12.00</option>
+            <option value="12.00-13.00">12.00-13.00</option>
+            <option value="13.00-14.00">13.00-14.00</option>
+            <option value="14.00-15.00">14.00-15.00</option>
+            <option value="15.00-16.00">15.00-16.00</option>
+            <option value="16.00-17.00">16.00-17.00</option>
+            <option value="17.00-18.00">17.00-18.00</option>
+            <option value="18.00-19.00">18.00-19.00</option>
+            <option value="19.00-20.00">19.00-20.00</option>
+            <option value="20.00-21.00">20.00-21.00</option>
+            <option value="21.00-22.00">21.00-22.00</option>
+            <option value="22.00-23.00">22.00-23.00</option>
+            <option value="23.00-00.00">23.00-00.00</option>
+          </select>
+         <label for="residenza"><i class="bi bi-person"></i>Seleziona Ora</label>
+        </div>
+
+        <div class="form-floating form-group mb-3">
+          <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome partita" required ngModel>
+          <label for="nome">Nome partita</label>
+        </div>
+        <div class="form-floating form-group mb-3">
+          <select name="tipo" id="tipo" class="form-select" placeholder="Tipo partita" required ngModel>
+            <option value="PUBBLICA">PUBBLICA</option>
+            <option value="PRIVATA">PRIVATA</option>
+          </select>
+         <label for="residenza">Tipo partita</label>
+        </div>
+        <button type="submit" class="btn btn-danger rounded-5 px-5" [disabled]="form.invalid">Crea partita</button>
+      </form>
+    </div>
+  </div>
+
+</div>
