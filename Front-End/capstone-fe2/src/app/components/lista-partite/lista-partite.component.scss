@@ -1,0 +1,31 @@
+.bg-ricerca {
+  background-color: #7FB069;
+  color: #191919;
+}
+
+.btn-blu {
+  &:hover {
+    color: #3B3561;
+  }
+}
+
+#dateStandard {
+  border: 0;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+  height: 5vh;
+  font-weight: 500;
+  color: #3B3561;
+}
+
+.h4 {
+  color: white;
+}
+
+select {
+  font-weight: 500;
+  color: #3B3561;
+}
+
+

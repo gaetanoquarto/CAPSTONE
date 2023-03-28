@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { StorageService } from 'src/app/auth/storage.service';
 import { Partita } from 'src/app/models/partita.interface';
 import { Utente } from 'src/app/models/utente.interface';
@@ -8,7 +9,6 @@ import { NotificaService } from 'src/app/services/notifica.service';
 import { PartitaService } from 'src/app/services/partita.service';
 import { UtenteService } from 'src/app/services/utente.service';
 import { Amico } from '../../models/amico.interface';
-import { UtenteAmico } from '../../models/utente-amico.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -23,8 +23,9 @@ export class NavbarComponent implements OnInit {
   pieno: boolean = false;
   amAccettata: boolean = false;
   parAccettata: boolean = false;
+  loggedIn: boolean = false;
 
-  constructor(private usrsrv: UtenteService, private route: Router, private storagesrv: StorageService, private nsrv: NotificaService, private amicisrv: ListaAmiciService, private parsrv: PartitaService) { }
+  constructor(private usrsrv: UtenteService, private route: Router, private storagesrv: StorageService, private nsrv: NotificaService, private amicisrv: ListaAmiciService, private parsrv: PartitaService, private authsrv: AuthService) { }
 
   ngOnInit(): void {
     this.ottieniUtente();
@@ -139,11 +140,21 @@ export class NavbarComponent implements OnInit {
 
   ottieniUtente() {
     let userId = this.storagesrv.getUser().id;
-    this.usrsrv.getUtente(userId).subscribe(resp => {
-      console.log(resp);
-      this.utenteLoggato = resp;
-      this.ottieniNotifiche();
-    })
+    if(userId) {
+      this.usrsrv.getUtente(userId).subscribe(resp => {
+        console.log(resp);
+        this.utenteLoggato = resp;
+        this.ottieniNotifiche();
+        this.loggedIn = true;
+      })
+    }
+
+  }
+
+  logout() {
+    this.authsrv.logout();
+    this.loggedIn = false;
+    this.route.navigateByUrl('/login');
   }
 
 }

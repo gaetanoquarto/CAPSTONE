@@ -1,27 +1,47 @@
 <div class="container-fluid">
-  <div class="row justify-content-center d-flex">
-    <div class="col">
-      <div class="form-floating form-group mb-3">
-        <select name="residenza" id="residenza" class="form-select" placeholder="Residenza" required [(ngModel)]="residenzaSelezionata" (ngModelChange)="getPartite()">
-          <option *ngFor="let p of arrayProvince" [ngValue]="p">{{p.provincia}}</option>
+
+  <div class="row justify-content-center d-flex bg-ricerca">
+    <div style="height: 10vh;"></div>
+
+    <!-- <h2 class="text-white mt-2 mb-5">Esplora</h2> -->
+
+    <div class="row text-center">
+      <div class="col">
+      <div class="form-group mb-3">
+            <label class="h4 mb-2" for="residenza">Dove vuoi giocare?</label>
+        <select class="border-0 option" name="residenza" id="residenza" class="form-select" placeholder="Residenza" required [(ngModel)]="residenzaSelezionata" (ngModelChange)="getPartite()">
+          <option class="text-center" *ngFor="let p of arrayProvince" [ngValue]="p">{{p.provincia}}</option>
         </select>
-       <label for="residenza">Zona</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-floating form-group mb-3">
-        <input style="width: 100%; height: 5vh;" type="date" id="dateStandard" name="dateStandard" [(ngModel)]="todayDate" (ngModelChange)="getPartite()">
-    </div>
-    </div>
+          </div>
+        </div>
+          <div class="col">
+            <div class="form-group mb-3">
+              <p class="mb-0 h4 mb-2">Quando vuoi giocare?</p>
+              <input class="rounded" type="date" id="dateStandard" name="dateStandard" [(ngModel)]="todayDate" (ngModelChange)="getPartite()">
+          </div>
+          </div>
+        </div>
+    <svg class="p-0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="1351" height="200" preserveAspectRatio="none" viewBox="0 0 1351 200">
+      <g mask="url(&quot;#SvgjsMask1225&quot;)" fill="none">
+          <path d="M 0,38 C 135.2,55.6 405.8,117.6 676,126 C 946.2,134.4 1216,89.2 1351,80L1351 200L0 200z" fill="rgba(255, 255, 255, 1)"></path>
+      </g>
+      <defs>
+          <mask id="SvgjsMask1225">
+              <rect width="1351" height="200" fill="#ffffff"></rect>
+          </mask>
+      </defs>
+  </svg>
 </div>
+
+
 
 <div class="container">
 
-  <div class="text-center mb-3 mt-3">
-    <a class="btn btn-primary" [routerLink]="['/crea-partita']">Crea Partita</a>
-  </div>
-
-  <h2 *ngIf="vuoto" class="text-center">NESSUNA PARTITA DISPONIBILE!</h2>
+  <div class="text-center" *ngIf="vuoto">
+    <a class="btn btn-blu mb-5" [routerLink]="['/crea-partita']">Crea Partita</a>
+  <h2 class="mb-0">Nessuna partita disponibile. Creane una!</h2>
+  <img src="assets/img/Soccer_Isometric.svg" alt="">
+</div>
 
   <div *ngIf="!vuoto">
   <div  *ngFor="let partite of arrayPartite" class="card">

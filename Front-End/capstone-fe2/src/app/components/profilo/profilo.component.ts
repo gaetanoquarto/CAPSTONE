@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { empty } from 'rxjs';
+import { empty, Subscription } from 'rxjs';
 import { StorageService } from 'src/app/auth/storage.service';
 import { Notifica } from 'src/app/models/notifica.interface';
 import { Utente } from 'src/app/models/utente.interface';
@@ -20,6 +20,7 @@ export class ProfiloComponent implements OnInit {
   idLoggato: number | undefined;
   richiesta: boolean = false;
   utenteLoggato: Utente | undefined;
+  routeSub!: Subscription;
 
   constructor(private ar: ActivatedRoute, private usrsrv: UtenteService, private storagesrv: StorageService, private notsrv: NotificaService) { }
 
@@ -51,12 +52,15 @@ export class ProfiloComponent implements OnInit {
   }
 
   ottieniUtente(): void {
-    let x = this.ar.snapshot.params["id"];
+    this.routeSub = this.ar.params.subscribe(params => {
+      const x = +params['id'];
       this.usrsrv.getUtente(x).subscribe( resp => {
         this.utente = resp;
         console.log(this.utente);
         this.ottieniUtenteLoggato();
       })
+    });
+
     }
 
     inviaAmicizia(): void {

@@ -1,37 +1,21 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar fixed-top navbar-expand-lg nav-bg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-      </ul>
-      <div class="dropstart me-2">
-        <button class="btn btn-secondary dropdown-toggle dropstart" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="navbar-brand" href="/">KickersConnect</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="bi bi-list"></i>
+      </button>
+
+
+      <div *ngIf="loggedIn" class="dropstart d-lg-none">
+        <button  class="btn btn-blu dropdown-toggle dropstart d-lg-none me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-bell"></i>
           <span *ngIf="pieno" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
         </button>
+
+        <button class="btn btn-danger d-lg-none" (click)="logout()" *ngIf="loggedIn"><i class="bi bi-box-arrow-right"></i></button>
+
         <ul class="dropdown-menu">
           <h5 class="ms-2">NOTIFICHE</h5>
           <hr>
@@ -52,15 +36,58 @@
         </li>
         </ul>
       </div>
-      <form class="d-flex search-container mx-auto me-5" role="search">
-        <input id="search-input" class="form-control me-2" type="text" placeholder="Ricerca un utente" (input)="ricercaUtenti($event)">
-        <ul id="search-results">
-          <li *ngFor="let u of utenti" (click)="selezioneUtente(u.id)">
-            {{ u.username }}
-          </li>
-        </ul>
-      </form>
 
-    </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/gioca']" routerLinkActive="router-link-active">Gioca</a>
+            </li>
+            <li class="nav-item d-lg-none">
+              <a class="nav-link" [routerLink]="['/user/', utenteLoggato?.id]" routerLinkActive="router-link-active">Profilo</a>
+            </li>
+          </ul>
+
+          <form *ngIf="loggedIn" class="d-flex search-container me-auto" role="search">
+            <input id="search-input" class="form-control me-2" type="text" placeholder="Ricerca un utente" (input)="ricercaUtenti($event)">
+            <ul class="rounded" style="width: 95%" id="search-results">
+              <li *ngFor="let u of utenti" (click)="selezioneUtente(u.id)">
+                {{ u.username }}
+              </li>
+            </ul>
+          </form>
+
+          <div class="dropstart d-none d-lg-inline">
+            <button *ngIf="loggedIn" class="btn btn-blu dropdown-toggle dropstart me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-bell"></i>
+              <span *ngIf="pieno" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <h5 class="ms-2">NOTIFICHE</h5>
+              <hr>
+              <li *ngIf="!pieno"><p class="text-center">Nessuna notifica.</p></li>
+              <li *ngFor="let nf of listaNotifiche; let i = index">
+                <a class="dropdown-item">
+
+                <p *ngIf="nf.notifica[i].tipoNotifica === 'RICHIESTA_AMICIZIA' && !amAccettata">L'utente <strong>{{nf.usernameMittente}}</strong> vuole stringere amicizia: <button class="btn btn-success" (click)="accettaAmicizia(nf.notifica[i].idMittente, nf.notifica[i].id)"><i class="bi bi-check-lg"></i></button> <button class="btn btn-danger"><i class="bi bi-x"></i></button></p>
+
+                <p *ngIf="nf.notifica[i].tipoNotifica === 'RICHIESTA_AMICIZIA' && amAccettata">Richiesta accettata!</p>
+
+
+                <p *ngIf="nf.notifica[i].tipoNotifica === 'INVITO_PARTITA' && !parAccettata">L'utente <strong>{{nf.usernameMittente}}</strong> ti ha invitato ad una partita il <strong>{{nf.notifica[i].partita.giornoPartita}}</strong> <br> alle ore <strong>{{nf.notifica[i].partita.oraPartita}} </strong> presso <strong>{{nf.notifica[i].partita.centroSportivo.nomeCentroSportivo}} - {{nf.notifica[i].partita.citta}} </strong> <button class="btn btn-success" (click)="accettaInvitoPartita(nf.notifica[i].partita, nf.notifica[i].id)"><i class="bi bi-check-lg"></i></button> <button class="btn btn-danger"><i class="bi bi-x"></i></button></p>
+
+                <p *ngIf="nf.notifica[i].tipoNotifica === 'INVITO_PARTITA' && parAccettata">Richiesta accettata!</p>
+              </a>
+              <hr>
+            </li>
+            </ul>
+          </div>
+          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" routerLinkActive="active"><i class="bi bi-person"></i></a>
+
+          <button class="btn btn-arancione d-none d-lg-inline me-2" (click)="logout()" *ngIf="loggedIn"><i class="bi bi-box-arrow-right"></i></button>
+
+      </div>
   </div>
 </nav>

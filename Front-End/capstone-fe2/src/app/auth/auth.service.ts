@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Provincia } from '../models/provincia.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { StorageService } from './storage.service';
+
 
 const url = 'http://localhost:8080/auth/login/';
 
@@ -14,16 +15,17 @@ const url = 'http://localhost:8080/auth/login/';
 })
 export class AuthService {
 
+  constructor(private http: HttpClient, private storagesrv: StorageService) {}
 
-  constructor(private http: HttpClient) {}
-
-  login(data: {username: string, password: string}): Observable<any> {
+  login(user: {user: any, username: string, password: string}): Observable<any> {
     return this.http.post(
       url,
-      data,
+      user,
       httpOptions
     );
   }
+
+
 
   register(data: any): Observable<any> {
     return this.http.post(
@@ -33,8 +35,8 @@ export class AuthService {
     );
   }
 
-  logout(): Observable<any> {
-    return this.http.post(url + 'signout', { }, httpOptions);
+  logout() {
+    this.storagesrv.clean();
   }
 
 }

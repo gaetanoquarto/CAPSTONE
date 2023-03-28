@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.nav-bg {
+  background-color: #7FB069;
+  color: #191919;
+}
 
 #search-results {
   position: absolute;
@@ -26,5 +30,18 @@
   }
 }
 
+.navbar-brand {
+  font-weight: 1000;
+  color: #3B3561;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: white;
+}
+
+.router-link-active {
+ color: #3B3561;
+}
 
 
