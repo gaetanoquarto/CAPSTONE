@@ -1,6 +1,7 @@
 package it.gaetanoquarto.app.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,9 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import it.gaetanoquarto.app.entities.enums.TipoPartita;
 import lombok.AllArgsConstructor;
@@ -41,8 +45,7 @@ public class Partita {
 	@OneToOne
 	private CentroSportivo CentroSportivo;
 	
-	@OneToOne
-	private Utente Organizzatore;
+	private String Organizzatore;
 	
 	private String nomePartita;
 	private String campo;
@@ -55,17 +58,14 @@ public class Partita {
 			joinColumns = @JoinColumn(name = "partita_id"),
 			inverseJoinColumns = @JoinColumn(name = "utente_id")
 		)
-	private List<Utente> listaPartecipanti;
+	private List<Utente> listaPartecipanti = new ArrayList<>();
 	
 	@Enumerated(EnumType.STRING)
 	private TipoPartita tipoPartita;
 	
 	private LocalDate giornoPartita;
 	
-	private String oraPartita;
-	
-	private boolean alCompleto;
-	
+	private String oraPartita;	
 	
 
 }

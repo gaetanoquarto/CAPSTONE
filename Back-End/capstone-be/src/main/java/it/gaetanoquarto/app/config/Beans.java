@@ -41,7 +41,6 @@ public class Beans {
 		
 	}
 	
-	
 	@Bean
 	@Scope("prototype")
 	public Campo campo(TipoCampo tipo, int maxPartecipanti) {
@@ -50,33 +49,5 @@ public class Beans {
 				.maxPartecipanti(maxPartecipanti)
 				.build();
 	}
-//	
-//	@Bean
-//	@Scope("prototype")
-//	public CentroSportivo centroSportivo(String nome, Provincia città) {
-//		return CentroSportivo.builder()
-//				.nomeCentroSportivo(nome)
-//				.cittàCentroSportivo(città)
-//				.build();
-//	}
-//	
-//	@Bean
-//	@Scope("prototype")
-//	public Notifica notifica(TipoNotifica tipo, int mittente, int destinatario, Partita partita) {
-//		return Notifica.builder()
-//				.tipoNotifica(tipo)
-//				.idMittente(mittente)
-//				.idDestinatario(destinatario)
-//				.partita(partita)
-//				.build();
-//	}
-//	
-//	@Bean
-//	@Scope("prototype")
-//	public Partita partita(CentroSportivo centroSportivo, Utente organizzatore, String nomePartita, int maxPartecipanti, ) {
-//		return Partita.builder()
-//				
-//				.build();
-//	}
 
 }

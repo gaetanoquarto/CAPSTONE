@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +36,6 @@ import lombok.ToString;
 @Builder
 @Getter
 @Setter
-@ToString
 public class Utente {
 	
 	@Id
@@ -57,28 +62,17 @@ public class Utente {
 	)
 	private Set<Ruolo> ruoli = new HashSet<>();
 	
-	@OneToMany
-	@JoinTable(
-			name = "amici_utenti",
-			joinColumns = @JoinColumn(name = "utente_id"),
-			inverseJoinColumns = @JoinColumn(name = "amico_id")
-		)
-	private List<Utente> listaAmici = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Amico> listaAmici = new HashSet<>();
 	
-	@OneToMany
+	
+	@ManyToMany
 	@JoinTable(
 			name = "notifiche_utenti",
 			joinColumns = @JoinColumn(name = "utente_id"),
 			inverseJoinColumns = @JoinColumn(name = "notifica_id")
 		)
-	private List<Notifica> notifiche = new ArrayList<>();
+	private Set<Notifica> notifiche = new HashSet<>();
 	
-	@OneToMany
-	@JoinTable(
-			name = "partite_utenti",
-			joinColumns = @JoinColumn(name = "utente_id"),
-			inverseJoinColumns = @JoinColumn(name = "partita_id")
-		)
-	private List<Partita> partite = new ArrayList<>();
 
 }

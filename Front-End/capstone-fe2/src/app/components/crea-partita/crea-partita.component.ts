@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { StorageService } from 'src/app/auth/storage.service';
 import { Campo } from 'src/app/models/campo.interface';
 import { CentroSportivo } from 'src/app/models/centro-sportivo.interface';
+import { Partita } from 'src/app/models/partita.interface';
 import { Provincia } from 'src/app/models/provincia.interface';
 import { Utente } from 'src/app/models/utente.interface';
 import { CentroSportivoService } from 'src/app/services/centro-sportivo.service';
@@ -23,7 +24,7 @@ export class CreaPartitaComponent implements OnInit {
   listaCentriSportivi: CentroSportivo[] = [];
   listaCampi: Campo[] = [];
   centroSportivoSelezionato: any| undefined;
-  user: Utente[] = [];
+  user: Utente | undefined;
   listaPartecipanti: any[] = [];
 
   constructor(private prtsrv: PartitaService, private router: Router,private cssrv: CentroSportivoService, private provsrv: ProvinciaService, private storagesrv: StorageService, private usrsrv: UtenteService) { }
@@ -64,7 +65,6 @@ export class CreaPartitaComponent implements OnInit {
     const userId = this.storagesrv.getUser().id;
   this.usrsrv.getUtente(userId).subscribe(resp => {
     this.user = resp;
-    console.log(this.user);
     this.listaPartecipanti.push(resp);
     console.log(this.listaPartecipanti);
 
@@ -76,7 +76,7 @@ export class CreaPartitaComponent implements OnInit {
    let data = {
     centroSportivo: CentriSportivi,
     campo: form.value.campo,
-    organizzatore: this.user,
+    organizzatore: this.user!.username,
     nomePartita: form.value.nome,
     tipoPartita: form.value.tipo,
     giornoPartita: form.value.giorno,

@@ -97,7 +97,7 @@ public class PartitaController {
 		ps.delete(partitaObj.get());
 		
 		return new ResponseEntity<>(
-			String.format("La partita con id %d è stata eliminata!", id), HttpStatus.OK	
+			HttpStatus.OK	
 		);
 	}
 	

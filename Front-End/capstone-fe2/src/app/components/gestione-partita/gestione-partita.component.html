@@ -1,2 +1,117 @@
 <div class="container-fluid">
+  <div class="card">
+    <div *ngIf="datiPartita" class="card-body">
+      <h5 class="card-title">Nome partita: {{partita?.nomePartita}}</h5>
+      <h6 class="card-subtitle mb-2">Organizzata da: {{partita?.organizzatore}}</h6>
+      <h6 class="card-subtitle mb-2">Luogo: {{partita?.citta}}</h6>
+      <h6 class="card-subtitle mb-2">Centro Sportivo: {{partita?.centroSportivo?.nomeCentroSportivo}}</h6>
+      <h6 class="card-subtitle mb-4">Indirizzo: {{partita?.centroSportivo?.indirizzo}}</h6>
+      <p class="card-text">Data evento: {{partita?.giornoPartita}} ore {{partita?.oraPartita}}</p>
+      <p class="card-text">Campo: {{partita?.campo}}</p>
+      <p class="card-text">Tipo Partita: {{partita?.tipoPartita}}</p>
+      <button *ngIf="organizzatore" class="btn btn-danger" (click)="eliminaPartita(partita!.id)">Annulla partita</button>
+      <button *ngIf="organizzatore" class="btn btn-warning" (click)="toggleDati()">Modifica partita</button>
+    </div>
+
+    <!--MODIFICA PARTITA-->
+    <div *ngIf="!datiPartita" class="card-body">
+      <form #form="ngForm" (ngSubmit)="onsubmit(form, partita!.id)">
+        <div class="form-floating form-group mb-3">
+         <select name="campo" id="campo" class="form-select" placeholder="campo" required [(ngModel)]="partita!.campo">
+           <option *ngFor="let campo of partita?.centroSportivo?.listaCampi" value="{{campo.tipoCampo}}" >{{campo.tipoCampo}}</option>
+         </select>
+         <label for="centroSportivo">Seleziona Campo</label>
+         </div>
+       <div class="form-group mb-3">
+         <label for="date">Seleziona giorno</label>
+         <input name="giorno" id="giorno" placeholder="Giorno" type="date" id="date" value="{{partita?.giornoPartita}}" required [(ngModel)]="partita!.giornoPartita">
+       </div>
+       <div class="form-floating form-group mb-3">
+         <select name="orario" id="orario" class="form-select" placeholder="Orario" required [(ngModel)]="partita!.oraPartita">
+           <option value="10.00-11.00">10.00-11.00</option>
+           <option value="11.00-12.00">11.00-12.00</option>
+           <option value="12.00-13.00">12.00-13.00</option>
+           <option value="13.00-14.00">13.00-14.00</option>
+           <option value="14.00-15.00">14.00-15.00</option>
+           <option value="15.00-16.00">15.00-16.00</option>
+           <option value="16.00-17.00">16.00-17.00</option>
+           <option value="17.00-18.00">17.00-18.00</option>
+           <option value="18.00-19.00">18.00-19.00</option>
+           <option value="19.00-20.00">19.00-20.00</option>
+           <option value="20.00-21.00">20.00-21.00</option>
+           <option value="21.00-22.00">21.00-22.00</option>
+           <option value="22.00-23.00">22.00-23.00</option>
+           <option value="23.00-00.00">23.00-00.00</option>
+         </select>
+        <label for="residenza"><i class="bi bi-person"></i>Seleziona Ora</label>
+       </div>
+
+       <div class="form-floating form-group mb-3">
+         <input name="nome" type="text" class="form-control" id="nome" placeholder="Nome partita"  required [(ngModel)]="partita!.nomePartita">
+         <label for="nome">Nome partita</label>
+       </div>
+       <div class="form-floating form-group mb-3">
+         <select name="tipo" id="tipo" class="form-select" placeholder="Tipo partita" required [(ngModel)]="partita!.tipoPartita">
+           <option value="PUBBLICA">PUBBLICA</option>
+           <option value="PRIVATA">PRIVATA</option>
+         </select>
+        <label for="residenza">Tipo partita</label>
+       </div>
+       <button type="submit" class="btn btn-danger rounded-5 px-5" [disabled]="form.invalid">Modifica partita</button>
+     </form>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Lista Partecipanti</h5>
+      <p>partecipanti: {{conteggioPartecipanti(partita?.listaPartecipanti)}} di {{partita?.campo === 'CALCIOA5' ? '10': partita?.campo === 'CALCIOA6' ? '12' : partita?.campo === 'CALCIOA7' ? '14' : 0}}</p>
+      <button *ngIf="!partecipanteEsistente && !organizzatore && !alCompleto" class="btn btn-success" (click)="partecipaPartita(partita!.id)">partecipa</button>
+      <button *ngIf="partecipanteEsistente && !organizzatore && !alCompleto" class="btn btn-danger" (click)="annullaPrenotazione(partita!.id)">Annulla</button>
+      <button class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling">Invita</button>
+      <p *ngIf="alCompleto" class="text-danger">La partita è al completo. Non puoi partecipare!</p>
+      <table class="table text-center">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th *ngIf="organizzatore" scope="col">Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let utenti of partita?.listaPartecipanti">
+            <td>{{utenti.username}} {{utenti.username === partita?.organizzatore ? '(organizzatore)' : null}}</td>
+            <td *ngIf="organizzatore"><button class="btn btn-danger" *ngIf="utenti.username !== partita?.organizzatore" (click)="rimuoviUtente(partita!.id, utenti.id)">rimuovi dalla partita</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Invita amici</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Amici</th>
+          <th scope="col">Azione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of utente?.listaAmici">
+          <td>{{u.username}}</td>
+          <td>
+            <button class="btn btn-success" (click)="invitaUtente(u.idUtente)"><i class="bi bi-plus-circle"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h6 *ngIf="esiste" class="text-danger">Impossibile invitare l'utente, fa già parte di questa partita!</h6>
+    <h6 *ngIf="invitatoConSuccesso" class="text-success">Invito inviato con successo!</h6>
+  </div>
 </div>

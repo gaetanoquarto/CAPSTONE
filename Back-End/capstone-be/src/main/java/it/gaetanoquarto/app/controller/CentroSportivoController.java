@@ -96,7 +96,7 @@ public class CentroSportivoController {
 		css.delete(centroSportivoObj.get());
 		
 		return new ResponseEntity<>(
-			String.format("Il centro sportivo con id %d è stata eliminato!", id), HttpStatus.OK	
+			HttpStatus.OK	
 		);
 	}
 	

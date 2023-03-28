@@ -36,5 +36,16 @@ public class UtenteService {
 	public void delete(Utente u) {
 		ur.delete(u);
 	}
+	
+	public List<Utente> getByParUsername(String username) {
+		return ur.findByParUsername(username);
+	}
+	
+	public List<Utente> aggiungiUtente(Utente u) {
+		List<Utente> utenti = ur.findAll();
+		utenti.add(u);
+		ur.saveAll(utenti);
+		return utenti;
+	}
 
 }

@@ -1,1 +1,10 @@
-<p>profilo works!</p>
+<div class="container text-center">
+  <img src="https://pro.statsports.com/wp-content/uploads/2020/02/Goalkeeper.jpg" class="rounded-5 mx-auto d-block mb-3" style="width: 15%;">
+  <h3>{{utente?.username}} <button *ngIf="!loggato && !richiesta" class="btn btn-success" (click)="inviaAmicizia()"><i class="bi bi-person-add"></i></button><button *ngIf="!loggato && richiesta" class="btn btn-danger"><i class="bi bi-person-add"></i></button></h3>
+  <h5>Nome: {{utente?.nome}}</h5>
+  <h5>Cognome: {{utente?.cognome}}</h5>
+  <h5>Email: {{utente?.email}}</h5>
+  <h5>Residenza: {{utente?.residenza?.provincia}}</h5>
+</div>
+
+

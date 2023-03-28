@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/auth/storage.service';
 import { Partita } from 'src/app/models/partita.interface';
 import { Provincia } from 'src/app/models/provincia.interface';
+import { Utente } from 'src/app/models/utente.interface';
 import { PartitaService } from 'src/app/services/partita.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
 import { UtenteService } from 'src/app/services/utente.service';
@@ -25,6 +26,7 @@ export class ListaPartiteComponent implements OnInit {
   numeroPartecipanti: any;
   nMaxPartecipanti: any;
   organizzatore: any;
+  datiOrganizzatore: Utente | undefined;
 
 
 
@@ -33,7 +35,6 @@ export class ListaPartiteComponent implements OnInit {
   constructor(private storagesrv: StorageService, private provsrv: ProvinciaService, private usrsrv: UtenteService, private parsrv: PartitaService) { }
 
   ngOnInit(): void {
-    this.utenteLoggato();
     this.getCitta();
   }
 
@@ -50,7 +51,7 @@ export class ListaPartiteComponent implements OnInit {
     this.provsrv.getProvince().subscribe(resp => {
       Object.assign(this.arrayProvince, resp);
     });
-
+    this.utenteLoggato();
   }
 
   getPartite(): void {
@@ -71,11 +72,26 @@ export class ListaPartiteComponent implements OnInit {
 
   checkPartecipanti(partite: Partita[]): void {
     console.log(partite);
-    for(let i = 0; i < partite.length; i++) {
+    for (let i = 0; i < partite.length; i++) {
       this.partecipanteEsistente = partite[i].listaPartecipanti.find(p => p.id === this.user.id)
       this.conteggioPartecipanti(partite[i].listaPartecipanti);
-      this.organizzatore = partite[i].organizzatore.id === this.user.id;
+      console.log(partite[i].organizzatore)
+      this.organizzatore = partite[i].organizzatore === this.user.username;
+      let datiOrganizzatore = partite[i].listaPartecipanti.find(p => p.username === partite[i].organizzatore);
+      console.log(datiOrganizzatore);
+      this.getDatiOrganizzatore(datiOrganizzatore?.id);
     }
+  }
+
+  getDatiOrganizzatore(organizzatore: any) {
+      this.usrsrv.getUtente(organizzatore).subscribe(resp => {
+        this.datiOrganizzatore = resp;
+      })
+  }
+
+  eliminaPartita(partitaId: number): void {
+    this.parsrv.eliminaPartita(partitaId).subscribe();
+    this.utenteLoggato();
   }
 
   annullaPrenotazione(partitaId: number) {
@@ -100,7 +116,10 @@ export class ListaPartiteComponent implements OnInit {
         console.log("utente già esistente")
         return;
       } else {
-        partita.listaPartecipanti.push(this.user);
+        console.log(this.user);
+        let senzaLista = this.user;
+        delete senzaLista.listaAmici
+        partita.listaPartecipanti.push(senzaLista);
         this.parsrv.aggiornaPartita(partitaId, partita).subscribe(resp => console.log(resp));
         this.partecipanteEsistente = partita.listaPartecipanti.find(p => p.id === this.user.id);
         this.conteggioPartecipanti(partita.listaPartecipanti)

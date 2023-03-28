@@ -74,7 +74,7 @@ public class CampoController {
 		cs.delete(campoObj.get());
 		
 		return new ResponseEntity<>(
-			String.format("Il campo con id %d è stato eliminato!", id), HttpStatus.OK	
+			HttpStatus.OK	
 		);
 	}
 	

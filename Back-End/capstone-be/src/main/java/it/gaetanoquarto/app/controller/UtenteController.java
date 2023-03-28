@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.gaetanoquarto.app.entities.Partita;
 import it.gaetanoquarto.app.entities.Ruolo;
 import it.gaetanoquarto.app.entities.Utente;
 import it.gaetanoquarto.app.services.RuoloService;
@@ -29,11 +33,19 @@ import it.gaetanoquarto.app.services.UtenteService;
 @RestController
 @RequestMapping("/api/")
 public class UtenteController {
-	
+			
 	@Autowired
 	private UtenteService us;
 	
 
+	@PostMapping("utenti")
+	public ResponseEntity<List<Utente>> addUtente(@RequestBody Utente utente) {
+		List<Utente> listaUtente = us.aggiungiUtente(utente);
+		return new ResponseEntity<>(listaUtente, HttpStatus.CREATED);
+		}
+	
+	
+	
 	//ottieni lista utenti
 	@GetMapping("utenti")
 	public ResponseEntity<List<Utente>> getUtenti() {
@@ -45,6 +57,7 @@ public class UtenteController {
 	//ottieni utente dall'id
 	@GetMapping("utenti/{id}")
 	public ResponseEntity<Object> getUtenteById(@PathVariable int id) {
+				
 		Optional<Utente> utenteObj = us.getById(id);
 		
 		ResponseEntity<Object> check = checkExists(utenteObj);
@@ -67,7 +80,6 @@ public class UtenteController {
 	
 	//modifica un utente
 	@PutMapping("utenti/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Object> updateUtente(@PathVariable int id, @RequestBody Utente _utente) {
 		Optional<Utente> utenteObj = us.getById(id);
 		
@@ -84,6 +96,8 @@ public class UtenteController {
 		utente.setResidenza(_utente.getResidenza());
 		utente.setImmagineProfilo(_utente.getImmagineProfilo());
 		utente.setRuoli(_utente.getRuoli());
+		utente.setListaAmici(_utente.getListaAmici());
+		utente.setNotifiche(_utente.getNotifiche());
 		
 		us.save(utente);
 		
@@ -102,8 +116,13 @@ public class UtenteController {
 		us.delete(utenteObj.get());
 		
 		return new ResponseEntity<>(
-			String.format("L'Utente con id %d è stato eliminato!", id), HttpStatus.OK	
+			HttpStatus.OK	
 		);
+	}
+	
+	@GetMapping("utenti/user")
+	public List<Utente> nome(@RequestParam("username") String username) {
+		return us.getByParUsername(username);
 	}
 	
 	//controllo SE esiste

@@ -5,12 +5,11 @@ export interface Partita {
   id: number,
   centroSportivo: CentroSportivo,
   campo: string,
-  organizzatore: Utente,
+  organizzatore: string,
   nomePartita: string,
   listaPartecipanti: Utente[],
   tipoPartita: string,
   giornoPartita: Date,
   oraPartita: string,
-  alCompleto: boolean,
   citta: string
 }

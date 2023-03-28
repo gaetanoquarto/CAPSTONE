@@ -103,7 +103,7 @@ public class ProvinciaController {
 		ps.delete(provinciaObj.get());
 		
 		return new ResponseEntity<>(
-			String.format("La Provincia con id %d è stata eliminata!", id), HttpStatus.OK	
+			HttpStatus.OK	
 		);
 	}
 	

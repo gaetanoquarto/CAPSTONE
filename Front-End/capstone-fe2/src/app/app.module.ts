@@ -15,6 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { CentriSportiviComponent } from './components/admin-dashboard/centri-sportivi/centri-sportivi.component';
 import { CreaPartitaComponent } from './components/crea-partita/crea-partita.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { CreaPartitaComponent } from './components/crea-partita/crea-partita.com
     FormsModule,
     AuthModule,
     HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
