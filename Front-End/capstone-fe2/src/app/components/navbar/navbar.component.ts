@@ -89,11 +89,16 @@ export class NavbarComponent implements OnInit {
           console.log("utenteLoggato: " + utenteLoggato.username)
           if (utenteLoggato) {
             mittenteObj.listaAmici.push(utenteLoggato);
-            this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => console.log(resp));
+            this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => {
+              this.ottieniUtente();
+
+            });
           } else {
             this.amicisrv.creaAmico(data2).subscribe(resp => {
               mittenteObj.listaAmici.push(resp);
-              this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => console.log(resp));
+              this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => {
+                this.ottieniUtente();
+              });
             })
           }
 
@@ -103,8 +108,9 @@ export class NavbarComponent implements OnInit {
             this.utenteLoggato?.notifiche.splice(rimuoviNotifica, 1);
             this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
               console.log(resp)
-              this.ottieniUtente();
-
+              this.nsrv.eliminaNotifica(idNotifica).subscribe( resp => {
+                this.ottieniUtente();
+              });
             });
           } else {
             this.amicisrv.creaAmico(data).subscribe(resp => {
@@ -112,7 +118,9 @@ export class NavbarComponent implements OnInit {
               let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === idNotifica);
               this.utenteLoggato?.notifiche.splice(rimuoviNotifica, 1)
               this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
-                this.ottieniUtente();
+                this.nsrv.eliminaNotifica(idNotifica).subscribe( resp => {
+                  this.ottieniUtente();
+                });
               })
             })
           }
@@ -132,9 +140,9 @@ export class NavbarComponent implements OnInit {
         this.parsrv.aggiornaPartita(partita.id, partita).subscribe(resp => {
           console.log(resp);
           this.parAccettata = true;
+          this.nsrv.eliminaNotifica(notificaId).subscribe()
       })
     });
-
   }
 
 

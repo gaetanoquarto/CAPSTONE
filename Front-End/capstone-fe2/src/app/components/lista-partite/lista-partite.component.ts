@@ -23,7 +23,7 @@ export class ListaPartiteComponent implements OnInit {
   selezioneCitta: any;
   user: any = null;
   partecipanteEsistente: any;
-  numeroPartecipanti: any;
+  numeroPartecipanti: number[] = [];
   nMaxPartecipanti: any;
   organizzatore: any;
   datiOrganizzatore: Utente | undefined;
@@ -74,20 +74,19 @@ export class ListaPartiteComponent implements OnInit {
     console.log(partite);
     for (let i = 0; i < partite.length; i++) {
       this.partecipanteEsistente = partite[i].listaPartecipanti.find(p => p.id === this.user.id)
-      this.conteggioPartecipanti(partite[i].listaPartecipanti);
-      console.log(partite[i].organizzatore)
-      this.organizzatore = partite[i].organizzatore === this.user.username;
-      let datiOrganizzatore = partite[i].listaPartecipanti.find(p => p.username === partite[i].organizzatore);
-      console.log(datiOrganizzatore);
-      this.getDatiOrganizzatore(datiOrganizzatore?.id);
+      this.conteggioPartecipanti(partite[i], i);
     }
   }
 
-  getDatiOrganizzatore(organizzatore: any) {
-      this.usrsrv.getUtente(organizzatore).subscribe(resp => {
-        this.datiOrganizzatore = resp;
-      })
+  checkOrganizzatore(partita: Partita): boolean {
+    return partita.organizzatore === this.user.username;
   }
+
+  // getDatiOrganizzatore(organizzatore: any) {
+  //     this.usrsrv.getUtente(organizzatore).subscribe(resp => {
+  //       this.datiOrganizzatore = resp;
+  //     })
+  // }
 
   eliminaPartita(partitaId: number): void {
     this.parsrv.eliminaPartita(partitaId).subscribe();
@@ -101,7 +100,10 @@ export class ListaPartiteComponent implements OnInit {
       console.log(partita);
       this.parsrv.aggiornaPartita(partitaId, partita).subscribe(resp => console.log(resp));
       this.partecipanteEsistente = partita.listaPartecipanti.find(p => p.id === this.user.id);
-      this.conteggioPartecipanti(partita.listaPartecipanti)
+      let partitaUguale = this.arrayPartite.find(p => p.id === partita.id);
+        let index = this.arrayPartite.indexOf(partitaUguale!);
+        console.log(index);
+        this.conteggioPartecipanti(partita, index)
     })
 
   }
@@ -117,12 +119,13 @@ export class ListaPartiteComponent implements OnInit {
         return;
       } else {
         console.log(this.user);
-        let senzaLista = this.user;
-        delete senzaLista.listaAmici
-        partita.listaPartecipanti.push(senzaLista);
+        partita.listaPartecipanti.push(this.user);
         this.parsrv.aggiornaPartita(partitaId, partita).subscribe(resp => console.log(resp));
         this.partecipanteEsistente = partita.listaPartecipanti.find(p => p.id === this.user.id);
-        this.conteggioPartecipanti(partita.listaPartecipanti)
+        let partitaUguale = this.arrayPartite.find(p => p.id === partita.id);
+        let index = this.arrayPartite.indexOf(partitaUguale!);
+        console.log(index);
+        this.conteggioPartecipanti(partita, index)
       }
     })
   }
@@ -138,8 +141,16 @@ export class ListaPartiteComponent implements OnInit {
 
   }
 
-  conteggioPartecipanti(obj: any): number {
-    return this.numeroPartecipanti = Object.keys(obj).length;
+  conteggioPartecipanti(partita: Partita, index: number){
+    if(this.numeroPartecipanti.length === 0) {
+      this.numeroPartecipanti.push(partita.listaPartecipanti.length);
+      console.log(this.numeroPartecipanti)
+    } else {
+      if(this.numeroPartecipanti[index] !== partita.listaPartecipanti.length) {
+        this.numeroPartecipanti.splice(index, 1, partita.listaPartecipanti.length)
+        console.log(this.numeroPartecipanti)
+      }
+    }
   }
 
   ottieniResidenza(): void {

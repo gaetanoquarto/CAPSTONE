@@ -1,10 +1,19 @@
-<div class="container text-center">
-  <img src="https://pro.statsports.com/wp-content/uploads/2020/02/Goalkeeper.jpg" class="rounded-5 mx-auto d-block mb-3" style="width: 15%;">
+<div class="container-fluid text-center p-0">
+  <div class="space p-5 text-white">
+    <h1>{{loggato ? "Il mio Profilo" : "Profilo utente"}}</h1>
+    <img src="https://pro.statsports.com/wp-content/uploads/2020/02/Goalkeeper.jpg" class="rounded-5 mx-auto d-block mb-3" style="width: 15%;">
+  <h3>{{utente?.username}} <button *ngIf="!loggato && !richiesta" class="btn btn-success" (click)="inviaAmicizia()"><i class="bi bi-person-add"></i></button><button *ngIf="!loggato && richiesta" class="btn btn-danger" (click)="rimuoviAmico()"><i class="bi bi-person-dash"></i></button></h3>
+  <p class="text-blu"><i class="bi bi-person h3"></i> <span class="text-white">{{utente?.nome}} {{utente?.cognome}}</span></p>
+  <p class="text-blu"><i class="bi bi-envelope-at h3"></i> <span class="text-white"> {{utente?.email}}</span></p>
+  <p class="text-blu"><i class="bi bi-geo-alt h3"></i> <span class="text-white"> {{utente?.residenza?.provincia}}</span></p>
+  </div>
+  <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 100" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop><stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,40L60,43.3C120,47,240,53,360,51.7C480,50,600,40,720,30C840,20,960,10,1080,13.3C1200,17,1320,33,1440,33.3C1560,33,1680,17,1800,13.3C1920,10,2040,20,2160,31.7C2280,43,2400,57,2520,55C2640,53,2760,37,2880,25C3000,13,3120,7,3240,8.3C3360,10,3480,20,3600,25C3720,30,3840,30,3960,25C4080,20,4200,10,4320,18.3C4440,27,4560,53,4680,56.7C4800,60,4920,40,5040,31.7C5160,23,5280,27,5400,30C5520,33,5640,37,5760,45C5880,53,6000,67,6120,61.7C6240,57,6360,33,6480,35C6600,37,6720,63,6840,68.3C6960,73,7080,57,7200,41.7C7320,27,7440,13,7560,11.7C7680,10,7800,20,7920,31.7C8040,43,8160,57,8280,66.7C8400,77,8520,83,8580,86.7L8640,90L8640,100L8580,100C8520,100,8400,100,8280,100C8160,100,8040,100,7920,100C7800,100,7680,100,7560,100C7440,100,7320,100,7200,100C7080,100,6960,100,6840,100C6720,100,6600,100,6480,100C6360,100,6240,100,6120,100C6000,100,5880,100,5760,100C5640,100,5520,100,5400,100C5280,100,5160,100,5040,100C4920,100,4800,100,4680,100C4560,100,4440,100,4320,100C4200,100,4080,100,3960,100C3840,100,3720,100,3600,100C3480,100,3360,100,3240,100C3120,100,3000,100,2880,100C2760,100,2640,100,2520,100C2400,100,2280,100,2160,100C2040,100,1920,100,1800,100C1680,100,1560,100,1440,100C1320,100,1200,100,1080,100C960,100,840,100,720,100C600,100,480,100,360,100C240,100,120,100,60,100L0,100Z"></path></svg>
+  <!-- <img src="https://pro.statsports.com/wp-content/uploads/2020/02/Goalkeeper.jpg" class="rounded-5 mx-auto d-block mb-3" style="width: 15%;">
   <h3>{{utente?.username}} <button *ngIf="!loggato && !richiesta" class="btn btn-success" (click)="inviaAmicizia()"><i class="bi bi-person-add"></i></button><button *ngIf="!loggato && richiesta" class="btn btn-danger"><i class="bi bi-person-add"></i></button></h3>
   <h5>Nome: {{utente?.nome}}</h5>
   <h5>Cognome: {{utente?.cognome}}</h5>
   <h5>Email: {{utente?.email}}</h5>
-  <h5>Residenza: {{utente?.residenza?.provincia}}</h5>
+  <h5>Residenza: {{utente?.residenza?.provincia}}</h5> -->
 </div>
 
 

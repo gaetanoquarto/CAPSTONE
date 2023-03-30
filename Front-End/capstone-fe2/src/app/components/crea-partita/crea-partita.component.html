@@ -1,9 +1,7 @@
-<div container-fluid>
-
-  <div class="card">
-    <div class="card-header">
-      Crea partita
-    </div>
+<div class="container-fluid d-flex align-items-center flex-column p-0 position-relative">
+  <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 130" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop><stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,65L80,60.7C160,56,320,48,480,41.2C640,35,800,30,960,28.2C1120,26,1280,26,1440,23.8C1600,22,1760,17,1920,15.2C2080,13,2240,13,2400,19.5C2560,26,2720,39,2880,49.8C3040,61,3200,69,3360,75.8C3520,82,3680,87,3840,84.5C4000,82,4160,74,4320,67.2C4480,61,4640,56,4800,60.7C4960,65,5120,78,5280,82.3C5440,87,5600,82,5760,73.7C5920,65,6080,52,6240,41.2C6400,30,6560,22,6720,19.5C6880,17,7040,22,7200,19.5C7360,17,7520,9,7680,10.8C7840,13,8000,26,8160,32.5C8320,39,8480,39,8640,47.7C8800,56,8960,74,9120,86.7C9280,100,9440,108,9600,110.5C9760,113,9920,108,10080,101.8C10240,95,10400,87,10560,75.8C10720,65,10880,52,11040,39C11200,26,11360,13,11440,6.5L11520,0L11520,130L11440,130C11360,130,11200,130,11040,130C10880,130,10720,130,10560,130C10400,130,10240,130,10080,130C9920,130,9760,130,9600,130C9440,130,9280,130,9120,130C8960,130,8800,130,8640,130C8480,130,8320,130,8160,130C8000,130,7840,130,7680,130C7520,130,7360,130,7200,130C7040,130,6880,130,6720,130C6560,130,6400,130,6240,130C6080,130,5920,130,5760,130C5600,130,5440,130,5280,130C5120,130,4960,130,4800,130C4640,130,4480,130,4320,130C4160,130,4000,130,3840,130C3680,130,3520,130,3360,130C3200,130,3040,130,2880,130C2720,130,2560,130,2400,130C2240,130,2080,130,1920,130C1760,130,1600,130,1440,130C1280,130,1120,130,960,130C800,130,640,130,480,130C320,130,160,130,80,130L0,130Z"></path></svg>
+  <h2>Crea la tua partita</h2>
+  <div class="card w-50 mt-3 text-center p-3">
     <div class="card-body">
       <form class="mb-3" #scegliCitta="ngForm" (ngSubmit)="trovaCentri(scegliCitta)">
         <div class="form-floating form-group mb-3">
@@ -30,7 +28,7 @@
           <label for="centroSportivo">Seleziona Campo</label>
           </div>
         <div class="form-group mb-3">
-          <label for="date">Seleziona giorno</label>
+          <p class="mb-2">Quando vuoi giocare?</p>
           <input name="giorno" id="giorno" placeholder="Giorno" type="date" id="date" required ngModel>
         </div>
         <div class="form-floating form-group mb-3">
@@ -68,5 +66,4 @@
       </form>
     </div>
   </div>
-
 </div>

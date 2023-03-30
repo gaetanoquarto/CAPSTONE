@@ -29,4 +29,5 @@ export class UtenteService {
   aggiungiListaUtente(utente: Utente): Observable<any> {
     return this.http.post(`http://localhost:8080/api/utenti/`, utente);
   }
+
 }

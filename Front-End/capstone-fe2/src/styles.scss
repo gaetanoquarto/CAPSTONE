@@ -18,7 +18,7 @@
   }
   &:focus {
     border: 1px solid #3B3561;
-    color: #3B3561;
+    color: white;
   }
 }
 
@@ -34,4 +34,30 @@
     border: 1px solid #F15025;
     color: white;
   }
+}
+
+.btn-verde {
+  background-color: #7FB069;
+  color: white;
+  &:hover {
+    border: 1px solid #7FB069;
+    color: #7FB069;
+  }
+  &:focus {
+    border: 1px solid #7FB069;
+    color: #7FB069;
+  }
+}
+
+.text-verde {
+  color: #7FB069;
+}
+
+.text-blu {
+  color: #3B3561;
+}
+
+.space {
+  width: 100%;
+  background-color: #7FB069;
 }

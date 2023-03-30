@@ -8,11 +8,11 @@
 }
 
 #search-results {
+  font-weight: 500;
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  border: 1px solid #ccc;
   border-top: none;
   background-color: #fff;
   list-style: none;
@@ -44,4 +44,12 @@
  color: #3B3561;
 }
 
+.btn-danger {
+  &:hover {
+    background-color: transparent;
+  }
+  &:focus {
+    background-color: transparent;
+  }
+}
 

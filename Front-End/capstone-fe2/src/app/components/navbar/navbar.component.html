@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg nav-bg">
+<nav class="navbar sticky-top navbar-expand-lg nav-bg shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">KickersConnect</a>
 
@@ -86,7 +86,7 @@
           </div>
           <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" routerLinkActive="active"><i class="bi bi-person"></i></a>
 
-          <button class="btn btn-arancione d-none d-lg-inline me-2" (click)="logout()" *ngIf="loggedIn"><i class="bi bi-box-arrow-right"></i></button>
+          <button class="btn btn-danger d-none d-lg-inline me-2" (click)="logout()" *ngIf="loggedIn"><i class="bi bi-box-arrow-right"></i></button>
 
       </div>
   </div>

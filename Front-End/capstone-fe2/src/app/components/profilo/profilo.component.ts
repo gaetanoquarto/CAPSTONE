@@ -60,8 +60,22 @@ export class ProfiloComponent implements OnInit {
         this.ottieniUtenteLoggato();
       })
     });
-
     }
+
+    rimuoviAmico() {
+     let amicoDaRimuovere = this.utenteLoggato?.listaAmici.findIndex(u => u.idUtente === this.utente?.id);
+     let amicoDaRimuovere2 = this.utente?.listaAmici.findIndex(u => u.idUtente === this.utenteLoggato?.id);
+     console.log(amicoDaRimuovere)
+     console.log(this.utenteLoggato?.listaAmici)
+     this.utenteLoggato?.listaAmici.splice(amicoDaRimuovere!, 1)
+     this.utente?.listaAmici.splice(amicoDaRimuovere2!, 1)
+     this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe( res => {
+      this.usrsrv.aggiornaUtente(this.utente!.id, this.utente!).subscribe(res => {
+        this.ottieniUtente();
+      })
+     })
+    }
+
 
     inviaAmicizia(): void {
       let notifica: Partial<Notifica> = {

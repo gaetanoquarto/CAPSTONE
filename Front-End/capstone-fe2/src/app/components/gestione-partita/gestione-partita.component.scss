@@ -1,0 +1,43 @@
+.space {
+  height: 2vh;
+}
+
+.container-fluid {
+  background-color: #7FB069;
+}
+.etichetta {
+  border-radius: 5px;
+  background: rgb(218, 218, 218);
+  color: rgb(139, 139, 139);
+  }
+
+  .tipo {
+    border-radius: 5px;
+    background: #3B3561;
+    color: white;
+  }
+
+  .btn-danger {
+    &:hover {
+      background: transparent;
+      color: red;
+    }
+  }
+
+  .indietro {
+    color: #3B3561;
+    border: 1px transparent;
+    cursor: pointer;
+  }
+
+  .rimuovi {
+    color: #F15025;
+    border: transparent;
+    &:hover {
+      color: #e60404;
+
+    }
+    &:focus {
+      color: #f12c25;
+    }
+  }

@@ -28,4 +28,26 @@ select {
   color: #3B3561;
 }
 
+.btn-arancione {
+  &:hover {
+    color: #3B3561;
+  }
+}
 
+.card-footer {
+  background-color: white;
+}
+
+.card-subtitle {
+  font-size: small;
+}
+
+.etichetta {
+border-radius: 5px;
+background: rgb(218, 218, 218);
+color: rgb(139, 139, 139);
+}
+
+.btn-arancione {
+  color: white;
+}
