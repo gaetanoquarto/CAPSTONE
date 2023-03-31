@@ -1,29 +1,160 @@
 <div class="container-fluid p-0">
   <div>
-  <div id="sopraDiv">
-  </div>
-		<video autoplay loop muted>
-			<source src="assets/video/video.mp4" type="video/mp4">
-		</video>
+    <div id="sopraDiv">
+    </div>
+    <video autoplay loop muted>
+      <source src="assets/video/video.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="d-flex justify-content-center align-items-center flex-column text-white" id="sopraBanner">
     <h1 class="fw-bolder">KickersConnect</h1>
-    <h3 class="fw-light">Il Network per veri appassionati di calcetto!</h3>
+    <h3 class="fw-light mb-4">Il Network per veri appassionati di calcetto!</h3>
     <a [routerLink]="['/register']" class="btn btn-blu shadow">Unisciti subito!</a>
   </div>
-  <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 280" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop><stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,168L80,154C160,140,320,112,480,107.3C640,103,800,121,960,116.7C1120,112,1280,84,1440,93.3C1600,103,1760,149,1920,172.7C2080,196,2240,196,2400,177.3C2560,159,2720,121,2880,130.7C3040,140,3200,196,3360,200.7C3520,205,3680,159,3840,158.7C4000,159,4160,205,4320,228.7C4480,252,4640,252,4800,247.3C4960,243,5120,233,5280,214.7C5440,196,5600,168,5760,149.3C5920,131,6080,121,6240,107.3C6400,93,6560,75,6720,56C6880,37,7040,19,7200,9.3C7360,0,7520,0,7680,32.7C7840,65,8000,131,8160,135.3C8320,140,8480,84,8640,65.3C8800,47,8960,65,9120,102.7C9280,140,9440,196,9600,219.3C9760,243,9920,233,10080,224C10240,215,10400,205,10560,182C10720,159,10880,121,11040,102.7C11200,84,11360,84,11440,84L11520,84L11520,280L11440,280C11360,280,11200,280,11040,280C10880,280,10720,280,10560,280C10400,280,10240,280,10080,280C9920,280,9760,280,9600,280C9440,280,9280,280,9120,280C8960,280,8800,280,8640,280C8480,280,8320,280,8160,280C8000,280,7840,280,7680,280C7520,280,7360,280,7200,280C7040,280,6880,280,6720,280C6560,280,6400,280,6240,280C6080,280,5920,280,5760,280C5600,280,5440,280,5280,280C5120,280,4960,280,4800,280C4640,280,4480,280,4320,280C4160,280,4000,280,3840,280C3680,280,3520,280,3360,280C3200,280,3040,280,2880,280C2720,280,2560,280,2400,280C2240,280,2080,280,1920,280C1760,280,1600,280,1440,280C1280,280,1120,280,960,280C800,280,640,280,480,280C320,280,160,280,80,280L0,280Z"></path></svg>
+  <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 280" version="1.1"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+        <stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop>
+        <stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop>
+      </linearGradient>
+    </defs>
+    <path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)"
+      d="M0,168L80,154C160,140,320,112,480,107.3C640,103,800,121,960,116.7C1120,112,1280,84,1440,93.3C1600,103,1760,149,1920,172.7C2080,196,2240,196,2400,177.3C2560,159,2720,121,2880,130.7C3040,140,3200,196,3360,200.7C3520,205,3680,159,3840,158.7C4000,159,4160,205,4320,228.7C4480,252,4640,252,4800,247.3C4960,243,5120,233,5280,214.7C5440,196,5600,168,5760,149.3C5920,131,6080,121,6240,107.3C6400,93,6560,75,6720,56C6880,37,7040,19,7200,9.3C7360,0,7520,0,7680,32.7C7840,65,8000,131,8160,135.3C8320,140,8480,84,8640,65.3C8800,47,8960,65,9120,102.7C9280,140,9440,196,9600,219.3C9760,243,9920,233,10080,224C10240,215,10400,205,10560,182C10720,159,10880,121,11040,102.7C11200,84,11360,84,11440,84L11520,84L11520,280L11440,280C11360,280,11200,280,11040,280C10880,280,10720,280,10560,280C10400,280,10240,280,10080,280C9920,280,9760,280,9600,280C9440,280,9280,280,9120,280C8960,280,8800,280,8640,280C8480,280,8320,280,8160,280C8000,280,7840,280,7680,280C7520,280,7360,280,7200,280C7040,280,6880,280,6720,280C6560,280,6400,280,6240,280C6080,280,5920,280,5760,280C5600,280,5440,280,5280,280C5120,280,4960,280,4800,280C4640,280,4480,280,4320,280C4160,280,4000,280,3840,280C3680,280,3520,280,3360,280C3200,280,3040,280,2880,280C2720,280,2560,280,2400,280C2240,280,2080,280,1920,280C1760,280,1600,280,1440,280C1280,280,1120,280,960,280C800,280,640,280,480,280C320,280,160,280,80,280L0,280Z">
+    </path>
+  </svg>
 
   <div class="container p-0">
     <div class="row text-center">
       <div class="col">
-        <h2 class="fw-bolder text-blu">Stanco di dover pregare i tuoi amici per una partita a calcetto?</h2>
-        <p class="fw-normal"><span class="text-blu fw-bold">KickersConnect</span> è il portale creato appositamente per gli appassionati di calcetto! </p>
+        <h2 class="fw-bolder text-blu">Stanco di dover pregare i tuoi amici per una partita di calcetto?</h2>
+        <p class="fw-normal">Quante volte ti sei ritrovato a dover chiamare tutta la tua rubrica telefonica per dover
+          trovare il famoso "decimo"? Oppure, quante volte avresti voluto organizzare una partita, ma ormai il resto
+          della tua compagnia è troppo impegnata per un'oretta di svago e divertimento? <span
+            class="text-blu fw-bold">KickersConnect</span> è il portale creato appositamente per gli appassionati di
+          calcetto! Grazie al nostro Network sarà possibile organizzarti con altri appassionati come te, in modo facile
+          e veloce! </p>
       </div>
       <div class="col">
         <img src="assets/img/team_Flatline.svg" alt="">
       </div>
     </div>
   </div>
-	</div>
+
+  <svg id="wave" style="transform:rotate(0deg); transition: 0.3s" viewBox="0 0 1440 180" version="1.1"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+        <stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop>
+        <stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop>
+      </linearGradient>
+    </defs>
+    <path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)"
+      d="M0,0L80,6C160,12,320,24,480,45C640,66,800,96,960,96C1120,96,1280,66,1440,48C1600,30,1760,24,1920,30C2080,36,2240,54,2400,78C2560,102,2720,132,2880,120C3040,108,3200,54,3360,33C3520,12,3680,24,3840,48C4000,72,4160,108,4320,129C4480,150,4640,156,4800,159C4960,162,5120,162,5280,153C5440,144,5600,126,5760,114C5920,102,6080,96,6240,105C6400,114,6560,138,6720,135C6880,132,7040,102,7200,81C7360,60,7520,48,7680,63C7840,78,8000,120,8160,123C8320,126,8480,90,8640,78C8800,66,8960,78,9120,84C9280,90,9440,90,9600,102C9760,114,9920,138,10080,132C10240,126,10400,90,10560,81C10720,72,10880,90,11040,108C11200,126,11360,144,11440,153L11520,162L11520,180L11440,180C11360,180,11200,180,11040,180C10880,180,10720,180,10560,180C10400,180,10240,180,10080,180C9920,180,9760,180,9600,180C9440,180,9280,180,9120,180C8960,180,8800,180,8640,180C8480,180,8320,180,8160,180C8000,180,7840,180,7680,180C7520,180,7360,180,7200,180C7040,180,6880,180,6720,180C6560,180,6400,180,6240,180C6080,180,5920,180,5760,180C5600,180,5440,180,5280,180C5120,180,4960,180,4800,180C4640,180,4480,180,4320,180C4160,180,4000,180,3840,180C3680,180,3520,180,3360,180C3200,180,3040,180,2880,180C2720,180,2560,180,2400,180C2240,180,2080,180,1920,180C1760,180,1600,180,1440,180C1280,180,1120,180,960,180C800,180,640,180,480,180C320,180,160,180,80,180L0,180Z">
+    </path>
+  </svg>
+
+  <div class="container-fluid p-5 green">
+    <h2 class="fw-bolder text-blu mb-5 text-center">Unisciti a migliaia di appassionati!</h2>
+    <div class="row text-center">
+      <div class="col d-flex justify-content-center">
+        <div class="card shadow" style="width: 25rem;">
+          <div class="card-body">
+            <h4 class="card-title fw-bold text-blu">Crea un account</h4>
+            <img src="assets/img/Soccer_Flatline.svg" alt="" style="width: 60%">
+            <p class="card-text">Iniziare a giocare non è mai stato così semplice! Crea un account cliccando su
+              <strong>"Registrati"</strong> o semplicemente sul pulsante qui in basso!</p>
+            <a [routerLink]="['/register']" class="btn btn-verde">Crea un account</a>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div class="card shadow" style="width: 25rem;">
+          <div class="card-body">
+            <h4 class="card-title fw-bold text-blu">Partecipa o crea una partita</h4>
+            <img class="mb-3" src="assets/img/Soccer_Outline.svg" alt="" style="width: 60%">
+            <p class="card-text">Dopo aver effettuato il login, vai nella sezione <strong>"Gioca"</strong>, seleziona la
+              tua città e unisciti a una delle partite disponibili oppure creane una tutta tua!</p>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-center">
+        <div class="card shadow" style="width: 25rem;">
+          <div class="card-body">
+            <h4 class="card-title fw-bold text-blu">Incontrati e gioca</h4>
+            <img class="mb-3" src="assets/img/team_Isometric.svg" alt="" style="width: 60%">
+            <p class="card-text">Ti basterà attendere l'orario prestabilito e recarti al centro sportivo! In questo modo
+              avrai conosciuto nuova gente appassionata come te e potrai goderti il divertimento!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg id="wave" style="transform:rotate(180deg); transition: 0.3s" viewBox="0 0 1440 180" version="1.1"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+        <stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop>
+        <stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop>
+      </linearGradient>
+    </defs>
+    <path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)"
+      d="M0,36L80,45C160,54,320,72,480,81C640,90,800,90,960,75C1120,60,1280,30,1440,36C1600,42,1760,84,1920,84C2080,84,2240,42,2400,48C2560,54,2720,108,2880,111C3040,114,3200,66,3360,42C3520,18,3680,18,3840,39C4000,60,4160,102,4320,108C4480,114,4640,84,4800,87C4960,90,5120,126,5280,126C5440,126,5600,90,5760,63C5920,36,6080,18,6240,21C6400,24,6560,48,6720,63C6880,78,7040,84,7200,96C7360,108,7520,126,7680,135C7840,144,8000,144,8160,141C8320,138,8480,132,8640,126C8800,120,8960,114,9120,105C9280,96,9440,84,9600,90C9760,96,9920,120,10080,132C10240,144,10400,144,10560,144C10720,144,10880,144,11040,141C11200,138,11360,132,11440,129L11520,126L11520,180L11440,180C11360,180,11200,180,11040,180C10880,180,10720,180,10560,180C10400,180,10240,180,10080,180C9920,180,9760,180,9600,180C9440,180,9280,180,9120,180C8960,180,8800,180,8640,180C8480,180,8320,180,8160,180C8000,180,7840,180,7680,180C7520,180,7360,180,7200,180C7040,180,6880,180,6720,180C6560,180,6400,180,6240,180C6080,180,5920,180,5760,180C5600,180,5440,180,5280,180C5120,180,4960,180,4800,180C4640,180,4480,180,4320,180C4160,180,4000,180,3840,180C3680,180,3520,180,3360,180C3200,180,3040,180,2880,180C2720,180,2560,180,2400,180C2240,180,2080,180,1920,180C1760,180,1600,180,1440,180C1280,180,1120,180,960,180C800,180,640,180,480,180C320,180,160,180,80,180L0,180Z">
+    </path>
+  </svg>
+
+  <div class="container p-3">
+    <div class="row text-center">
+      <div class="col">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nome centro sportivo</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Città</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Numero di telefono/cellulare</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Cosa ti interessa sapere?</label>
+            <textarea class="form-control" style="height: 12rem;" aria-label="With textarea"></textarea>
+          </div>
 
 
+          <button type="submit" class="btn btn-verde" [routerLink]="['/']">Invia richiesta</button>
+        </form>
+      </div>
+
+      <div class="col">
+        <h2 class="fw-bolder text-blu">Sei un Centro Sportivo ?</h2>
+        <p class="fw-normal">Sei alla ricerca di un modo per ottenere più clienti per la tua attività? <strong>Contattaci</strong> tramite il form qui accanto e saremo felici di darti maggiori informazioni per poter essere inseriti nei nostri database! </p>
+        <img src="assets/img/team_Color.svg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <svg class="m-0" id="wave" style="transform:rotate(0deg); transition: 0.3s" viewBox="0 0 1440 180" version="1.1" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0"><stop stop-color="rgba(127, 176, 105, 1)" offset="0%"></stop><stop stop-color="rgba(127, 176, 105, 1)" offset="100%"></stop></linearGradient></defs><path style="transform:translate(0, 0px); opacity:1" fill="url(#sw-gradient-0)" d="M0,162L80,135C160,108,320,54,480,48C640,42,800,84,960,90C1120,96,1280,66,1440,66C1600,66,1760,96,1920,99C2080,102,2240,78,2400,63C2560,48,2720,42,2880,39C3040,36,3200,36,3360,30C3520,24,3680,12,3840,24C4000,36,4160,72,4320,87C4480,102,4640,96,4800,96C4960,96,5120,102,5280,108C5440,114,5600,120,5760,129C5920,138,6080,150,6240,129C6400,108,6560,54,6720,42C6880,30,7040,60,7200,66C7360,72,7520,54,7680,45C7840,36,8000,36,8160,30C8320,24,8480,12,8640,27C8800,42,8960,84,9120,102C9280,120,9440,114,9600,114C9760,114,9920,120,10080,123C10240,126,10400,126,10560,105C10720,84,10880,42,11040,39C11200,36,11360,72,11440,90L11520,108L11520,180L11440,180C11360,180,11200,180,11040,180C10880,180,10720,180,10560,180C10400,180,10240,180,10080,180C9920,180,9760,180,9600,180C9440,180,9280,180,9120,180C8960,180,8800,180,8640,180C8480,180,8320,180,8160,180C8000,180,7840,180,7680,180C7520,180,7360,180,7200,180C7040,180,6880,180,6720,180C6560,180,6400,180,6240,180C6080,180,5920,180,5760,180C5600,180,5440,180,5280,180C5120,180,4960,180,4800,180C4640,180,4480,180,4320,180C4160,180,4000,180,3840,180C3680,180,3520,180,3360,180C3200,180,3040,180,2880,180C2720,180,2560,180,2400,180C2240,180,2080,180,1920,180C1760,180,1600,180,1440,180C1280,180,1120,180,960,180C800,180,640,180,480,180C320,180,160,180,80,180L0,180Z"></path></svg>
+</div>
+<footer class="container-fluid bottom-0 m-0 p-0">
+  <div class="row mb-5">
+    <div class="col p-0 justify-content-center d-flex align-items-center">
+      <h3><a class="fw-bolder text-blu m-0 text-decoration-none" [routerLink]="['/home']">KickersConnect</a></h3>
+    </div>
+    <div class="col p-0 justify-content-center d-flex align-items-center flex-column">
+      <h3 class="text-blu">Seguici sui social</h3>
+      <div class="text-blu">
+      <a class="text-blu me-2" href="https://www.facebook.com" target="_blank"><i class="bi h3 bi-facebook"></i></a>
+      <a class="text-blu me-2" href="https://www.instagram.com" target="_blank"><i class="bi h3 bi-instagram"></i></a>
+      <a class="text-blu" href="https://www.linkedin.com" target="_blank"><i class="bi h3 bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="text-center d-flex justify-content-center align-items-center flex-column">
+    <hr class="rounded" style="width: 80%;">
+    <p class="p-3 m-0 fw-light text-blu"> All Rights Reserved <span class="fw-normal">KickersConnect</span> &#169; 2023</p>
+  </div>
+</footer>

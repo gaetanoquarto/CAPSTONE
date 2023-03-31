@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg nav-bg shadow-sm">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">KickersConnect</a>
+    <a class="navbar-brand" [routerLink]="['/home']">KickersConnect</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
           aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,11 @@
             </li>
             </ul>
           </div>
-          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" routerLinkActive="active"><i class="bi bi-person"></i></a>
+
+          <a class="text-decoration-none me-2 nav-link" *ngIf="!loggedIn" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
+          <a class=" text-decoration-none me-2 nav-link" *ngIf="!loggedIn" [routerLink]="['/register']" routerLinkActive="router-link-active">Registrati</a>
+
+          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" *ngIf="loggedIn" routerLinkActive="active"><i class="bi bi-person"></i></a>
 
           <button class="btn btn-danger d-none d-lg-inline me-2" (click)="logout()" *ngIf="loggedIn"><i class="bi bi-box-arrow-right"></i></button>
 

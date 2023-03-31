@@ -1,0 +1,43 @@
+video {
+  width: 100%;
+  height: 95vh;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;
+}
+
+#sopraDiv {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  height: 95vh;
+  opacity: 50%;
+}
+
+#sopraBanner {
+  position: relative;
+  z-index: 0;
+  height: 95vh;
+  width: 100%;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+.btn-arancione {
+  color: white;
+  &:hover {
+    color: #F15025;
+  }
+  &:disabled {
+    color: #F15025;
+  }
+}
+
+a {
+  &:hover {
+    color: #ef0303;
+  }
+}
+
