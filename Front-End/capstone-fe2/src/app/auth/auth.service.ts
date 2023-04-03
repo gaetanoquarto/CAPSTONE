@@ -14,6 +14,7 @@ const url = 'http://localhost:8080/auth/login/';
   providedIn: 'root'
 })
 export class AuthService {
+  isLoggedIn: boolean = false;
 
   constructor(private http: HttpClient, private storagesrv: StorageService) {}
 
@@ -22,7 +23,7 @@ export class AuthService {
       url,
       user,
       httpOptions
-    );
+    )
   }
 
 

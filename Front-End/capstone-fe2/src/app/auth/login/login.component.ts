@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -10,7 +10,6 @@ import { StorageService } from '../storage.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
@@ -33,6 +32,7 @@ export class LoginComponent implements OnInit {
 
           this.isLoginFailed = false;
           this.isLoggedIn = true;
+          this.usrsrv.isLoggedIn = true;
           this.roles = this.storageService.getUser().roles;
           this.router.navigate(['/gioca'])
         }

@@ -50,7 +50,7 @@
             </li>
           </ul>
 
-          <form *ngIf="loggedIn" class="d-flex search-container me-auto" role="search">
+          <form *ngIf="authsrv.isLoggedIn" class="d-flex search-container me-auto" role="search">
             <input id="search-input" class="form-control me-2" type="text" placeholder="Ricerca un utente" (input)="ricercaUtenti($event)">
             <ul class="rounded" style="width: 95%" id="search-results">
               <li *ngFor="let u of utenti" (click)="selezioneUtente(u.id)">
@@ -60,7 +60,7 @@
           </form>
 
           <div class="dropstart d-none d-lg-inline">
-            <button *ngIf="loggedIn" class="btn btn-blu dropdown-toggle dropstart me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button *ngIf="authsrv.isLoggedIn" class="btn btn-blu dropdown-toggle dropstart me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-bell"></i>
               <span *ngIf="pieno" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
             </button>
@@ -71,12 +71,12 @@
               <li *ngFor="let nf of listaNotifiche; let i = index">
                 <a class="dropdown-item">
 
-                <p *ngIf="nf.notifica[i].tipoNotifica === 'RICHIESTA_AMICIZIA' && !amAccettata">L'utente <strong>{{nf.usernameMittente}}</strong> vuole stringere amicizia: <button class="btn btn-success" (click)="accettaAmicizia(nf.notifica[i].idMittente, nf.notifica[i].id)"><i class="bi bi-check-lg"></i></button> <button class="btn btn-danger"><i class="bi bi-x"></i></button></p>
+                <p *ngIf="nf.notifica[i].tipoNotifica === 'RICHIESTA_AMICIZIA' && !amAccettata">L'utente <strong>{{nf.usernameMittente}}</strong> vuole stringere amicizia: <button class="btn btn-success" (click)="accettaAmicizia(nf.notifica[i].idMittente, nf.notifica[i].id)"><i class="bi bi-check-lg"></i></button> <button class="btn btn-danger" (click)="rifiutaAmicizia(nf.notifica[i].id)"><i class="bi bi-x"></i></button></p>
 
                 <p *ngIf="nf.notifica[i].tipoNotifica === 'RICHIESTA_AMICIZIA' && amAccettata">Richiesta accettata!</p>
 
 
-                <p *ngIf="nf.notifica[i].tipoNotifica === 'INVITO_PARTITA' && !parAccettata">L'utente <strong>{{nf.usernameMittente}}</strong> ti ha invitato ad una partita il <strong>{{nf.notifica[i].partita.giornoPartita}}</strong> <br> alle ore <strong>{{nf.notifica[i].partita.oraPartita}} </strong> presso <strong>{{nf.notifica[i].partita.centroSportivo.nomeCentroSportivo}} - {{nf.notifica[i].partita.citta}} </strong> <button class="btn btn-success" (click)="accettaInvitoPartita(nf.notifica[i].partita, nf.notifica[i].id)"><i class="bi bi-check-lg"></i></button> <button class="btn btn-danger"><i class="bi bi-x"></i></button></p>
+                <p *ngIf="nf.notifica[i].tipoNotifica === 'INVITO_PARTITA' && !parAccettata">L'utente <strong>{{nf.usernameMittente}}</strong> ti ha invitato ad una partita il <strong>{{nf.notifica[i].partita.giornoPartita}}</strong> <br> alle ore <strong>{{nf.notifica[i].partita.oraPartita}} </strong> presso <strong>{{nf.notifica[i].partita.centroSportivo.nomeCentroSportivo}} - {{nf.notifica[i].partita.citta}} </strong> <button class="btn btn-success" (click)="accettaInvitoPartita(nf.notifica[i].partita, nf.notifica[i].id)"><i class="bi bi-check-lg"></i></button> <button class="btn btn-danger" (click)="rifiutaInvitoPartita(nf.notifica[i].id)"><i class="bi bi-x"></i></button></p>
 
                 <p *ngIf="nf.notifica[i].tipoNotifica === 'INVITO_PARTITA' && parAccettata">Richiesta accettata!</p>
               </a>
@@ -85,12 +85,12 @@
             </ul>
           </div>
 
-          <a class="text-decoration-none me-2 nav-link" *ngIf="!loggedIn" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
-          <a class=" text-decoration-none me-2 nav-link" *ngIf="!loggedIn" [routerLink]="['/register']" routerLinkActive="router-link-active">Registrati</a>
+          <a class="text-decoration-none me-2 nav-link" *ngIf="!authsrv.isLoggedIn" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
+          <a class=" text-decoration-none me-2 nav-link" *ngIf="!authsrv.isLoggedIn" [routerLink]="['/register']" routerLinkActive="router-link-active">Registrati</a>
 
-          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" *ngIf="loggedIn" routerLinkActive="active"><i class="bi bi-person"></i></a>
+          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" *ngIf="authsrv.isLoggedIn" routerLinkActive="active"><i class="bi bi-person"></i></a>
 
-          <button class="btn btn-danger d-none d-lg-inline me-2" (click)="logout()" *ngIf="loggedIn"><i class="bi bi-box-arrow-right"></i></button>
+          <button class="btn btn-danger d-none d-lg-inline me-2" (click)="logout()" *ngIf="authsrv.isLoggedIn"><i class="bi bi-box-arrow-right"></i></button>
 
       </div>
   </div>

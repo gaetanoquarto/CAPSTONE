@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { StorageService } from 'src/app/auth/storage.service';
@@ -25,10 +25,10 @@ export class NavbarComponent implements OnInit {
   parAccettata: boolean = false;
   loggedIn: boolean = false;
 
-  constructor(private usrsrv: UtenteService, private route: Router, private storagesrv: StorageService, private nsrv: NotificaService, private amicisrv: ListaAmiciService, private parsrv: PartitaService, private authsrv: AuthService) { }
+  constructor(private usrsrv: UtenteService, private route: Router, private storagesrv: StorageService, private nsrv: NotificaService, private amicisrv: ListaAmiciService, private parsrv: PartitaService, public authsrv: AuthService) { }
 
   ngOnInit(): void {
-    this.ottieniUtente();
+      this.ottieniUtente();
   }
 
   ricercaUtenti(event: any) {
@@ -145,15 +145,31 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  rifiutaAmicizia(notificaId: number) {
+    let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === notificaId);
+    this.utenteLoggato!.notifiche.splice(rimuoviNotifica, 1)
+    this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
+      this.nsrv.eliminaNotifica(notificaId).subscribe(resp => console.log(resp));
+    })
+  }
 
-  ottieniUtente() {
+  rifiutaInvitoPartita(notificaId: number) {
+    let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === notificaId);
+    this.utenteLoggato!.notifiche.splice(rimuoviNotifica, 1)
+    this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
+      this.nsrv.eliminaNotifica(notificaId).subscribe(resp => console.log(resp));
+    })
+  }
+
+
+   ottieniUtente() {
     let userId = this.storagesrv.getUser().id;
     if(userId) {
       this.usrsrv.getUtente(userId).subscribe(resp => {
         console.log(resp);
         this.utenteLoggato = resp;
+        this.authsrv.isLoggedIn = true;
         this.ottieniNotifiche();
-        this.loggedIn = true;
       })
     }
 
@@ -161,7 +177,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authsrv.logout();
-    this.loggedIn = false;
+    this.authsrv.isLoggedIn = false;
     this.route.navigateByUrl('/login');
   }
 
