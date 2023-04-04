@@ -41,3 +41,58 @@
       color: #f12c25;
     }
   }
+
+  @media only screen and (max-width: 576px) {
+
+   .container {
+    display: flex;
+    flex-direction: column;
+   }
+
+   .card {
+    width: 100%;
+    max-height: 70vh;
+    margin-bottom: 20px;
+   }
+  }
+  @media only screen and (min-width: 577px) {
+
+   .container {
+    display: flex;
+    flex-direction: column;
+   }
+
+   .card {
+    overflow-x: auto;
+    width: 100%;
+    max-height: 70vh;
+    margin-bottom: 20px;
+   }
+  }
+  @media only screen and (min-width: 768px) {
+
+   .card {
+    max-height: 85vh;
+   }
+  }
+  @media only screen and (min-width: 992px) {
+
+    .container {
+      display: flex;
+      flex-direction: row;
+     }
+
+   .card {
+    margin-right: 20px;
+    width: 40rem;
+    height: 70vh;
+   }
+  }
+  @media only screen and (min-width: 1200px) {
+
+   .card {
+    margin-right: 20px;
+    width: 40rem;
+    height: 90vh;
+   }
+  }

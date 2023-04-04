@@ -41,3 +41,57 @@ a {
   }
 }
 
+/*-----RESPONSIVE-----*/
+
+@media only screen and (max-width: 576px) {
+
+  .nascondi {
+    display: none;
+  }
+
+  .card {
+    padding: 50px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (min-width: 577px) {
+  .nascondi {
+    display: none;
+  }
+
+  .card {
+    padding: 50px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+
+  h2 {
+    font-size: 40px;
+  }
+  p {
+    font-size: 20px;
+  }
+  .card {
+    padding: 40px;
+  }
+  .nascondi {
+    display: block;
+  }
+}
