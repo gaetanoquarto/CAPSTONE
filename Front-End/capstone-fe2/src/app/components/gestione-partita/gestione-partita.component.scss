@@ -42,6 +42,32 @@
     }
   }
 
+  .bg-chat {
+    background-color: whitesmoke;
+  }
+
+  .nuvoletta {
+    background-color: #3B3561;
+    width: fit-content;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+
+
+
+  /*---------RESPONSIVE--------*/
   @media only screen and (max-width: 576px) {
 
    .container {

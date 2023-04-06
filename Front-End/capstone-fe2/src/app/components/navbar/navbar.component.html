@@ -50,7 +50,7 @@
             </li>
           </ul>
 
-          <form *ngIf="authsrv.isLoggedIn" class="d-flex search-container me-auto" role="search">
+          <form *ngIf="authsrv.isLoggedIn" class="d-flex search-container" role="search">
             <input id="search-input" class="form-control me-2" type="text" placeholder="Ricerca un utente" (input)="ricercaUtenti($event)">
             <ul class="rounded" style="width: 95%" id="search-results">
               <li *ngFor="let u of utenti" (click)="selezioneUtente(u.id)">

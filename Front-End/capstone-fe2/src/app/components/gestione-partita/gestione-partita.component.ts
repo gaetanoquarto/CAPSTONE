@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/auth/storage.service';
+import { Chat } from 'src/app/models/chat.interface';
+import { Messaggio } from 'src/app/models/messaggio.interface';
 import { Notifica } from 'src/app/models/notifica.interface';
 import { Partita } from 'src/app/models/partita.interface';
 import { Utente } from 'src/app/models/utente.interface';
+import { ChatService } from 'src/app/services/chat.service';
+import { MessaggioService } from 'src/app/services/messaggio.service';
 import { NotificaService } from 'src/app/services/notifica.service';
 import { PartitaService } from 'src/app/services/partita.service';
 import { UtenteService } from 'src/app/services/utente.service';
@@ -26,8 +30,10 @@ export class GestionePartitaComponent implements OnInit {
   alCompleto: boolean = false;
   esiste: boolean = false;
   invitatoConSuccesso: boolean = false;
+  bacheca: Chat | undefined;
+  usernameChat: string | undefined
 
-  constructor(private ar: ActivatedRoute, private parsrv: PartitaService, private storagesrv: StorageService, private usrsrv: UtenteService, private router: Router, private ntfsrv: NotificaService) { }
+  constructor(private ar: ActivatedRoute, private parsrv: PartitaService, private storagesrv: StorageService, private usrsrv: UtenteService, private router: Router, private ntfsrv: NotificaService, private messrv: MessaggioService, private chatsrv: ChatService) { }
 
   ngOnInit(): void {
     this.ottieniPartita();
@@ -39,12 +45,16 @@ export class GestionePartitaComponent implements OnInit {
     this.parsrv.getPartitaById(x).subscribe(resp => {
       this.partita = resp
       this.verificaOrganizzatore(this.partita);
+      this.ottieniMessaggi();
     });
   }
 
   eliminaPartita(partitaId: number): void {
-    this.parsrv.eliminaPartita(partitaId).subscribe();
-    this.router.navigateByUrl('/gioca')
+      this.parsrv.eliminaPartita(partitaId).subscribe(() => {
+        this.chatsrv.eliminaChat(this.bacheca!.id).subscribe()
+        this.router.navigateByUrl('/gioca')
+      });
+
   }
 
 onsubmit(form: NgForm, partitaId: number) {
@@ -60,7 +70,8 @@ onsubmit(form: NgForm, partitaId: number) {
       tipoPartita: form.value.tipo,
       giornoPartita: form.value.giorno,
       oraPartita: form.value.orario,
-      citta: this.partita!.citta
+      citta: this.partita!.citta,
+      chat: this.partita!.chat
     }
     console.log(data);
     this.parsrv.aggiornaPartita(partitaId, data).subscribe(resp => {
@@ -204,5 +215,58 @@ checkAlCompleto(): void {
       }
     })
   }
+
+
+  ConvertTo2Digits(newNum: number) {
+    return newNum.toString().padStart(2, '0');
+}
+
+ottieniData(data: Date) {
+ return([ data.getDate(),
+  this.ConvertTo2Digits(data.getMonth() + 1),
+  this.ConvertTo2Digits(data.getFullYear())
+].join('-'))
+}
+
+ottieniOra(orario: Date) {
+  return([
+    this.ConvertTo2Digits(orario.getHours()),
+          this.ConvertTo2Digits(orario.getMinutes())
+  ].join(':')
+  )
+}
+
+  ottieniMessaggi() {
+    this.chatsrv.getChat(this.partita!.chat.id).subscribe(resp => {
+      this.bacheca = resp;
+      console.log(this.bacheca)
+    })
+  }
+
+  invioMessaggio(messaggio: string) {
+    if(messaggio !== '') {
+      let date = this.ottieniData(new Date);
+    let ora = this.ottieniOra(new Date);
+    let data: Partial<Messaggio> = {
+      id_Utente: this.utente.id,
+      username_Utente: this.utente.username,
+      messaggio: messaggio,
+      data: date,
+      ora: ora
+    }
+    console.log(data);
+    this.messrv.creaMessaggio(data).subscribe(mex => {
+      this.chatsrv.getChat(this.partita!.chat.id).subscribe(chat => {
+        chat.messaggi.push(mex)
+        console.log(chat)
+        this.chatsrv.aggiornaChat(chat.id, chat).subscribe(resp => {
+          console.log(resp);
+          this.bacheca = resp;
+        })
+      })
+    })
+    }
+  }
+
 
 }

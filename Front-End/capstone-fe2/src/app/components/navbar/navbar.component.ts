@@ -49,19 +49,28 @@ export class NavbarComponent implements OnInit {
   }
 
   ottieniNotifiche() {
+  //cicla sulla lista notifiche dell'utente
     for (let i = 0; i < this.utenteLoggato!.notifiche.length; i++) {
+      //se non ci sono notifiche
       if(this.utenteLoggato?.notifiche.length === 0) {
+        //la variabile listaNotifiche resta vuota
         this.listaNotifiche = [];
       } else {
+      //altrimenti recupera l'id del mittente delle notifiche
         let idMittente = this.utenteLoggato?.notifiche[i].idMittente;
+        //recuperami l'utente mittente
         this.usrsrv.getUtente(idMittente!).subscribe(resp => {
+          //se l'id del mittente è uguale all'id dell'utente recuperato
           if (idMittente === resp.id) {
+            //creami un oggetto con il nome di quell'utente e la sua notifica e inseriscila nell'array listaNotifiche
             this.listaNotifiche.push({
               usernameMittente: resp.username,
               notifica: this.utenteLoggato?.notifiche.filter(n => n.idMittente === resp.id)
             })
             console.log(this.listaNotifiche)
+            //se l'array listaNotifiche ha qualcosa all'interno
             if (this.listaNotifiche.length !== 0) {
+              //settami il boolean pieno in true
               this.pieno = true;
             }
           }
@@ -71,29 +80,36 @@ export class NavbarComponent implements OnInit {
   }
 
   accettaAmicizia(idMittente: number, idNotifica: number) {
+    //se esiste l'idMittente
     if (idMittente) {
+      //recuperami l'utente per intero
       this.usrsrv.getUtente(idMittente).subscribe(mittenteObj => {
+        //creami un data amico per l'utente loggato
         let data: Partial<Amico> = {
           idUtente: mittenteObj.id,
           username: mittenteObj.username
         }
+        //creami un altro data amico per il mittente
         let data2: Partial<Amico> = {
           idUtente: this.utenteLoggato?.id,
           username: this.utenteLoggato?.username
         }
+        //recuperami la lista completa degli amici
         this.amicisrv.getAllAmici().subscribe(resp => {
           console.log(resp);
+          //controlla se questi utenti esistono già nel database
           let mittente: Amico = resp.find((p: Amico) => p.idUtente === data.idUtente);
           let utenteLoggato: Amico = resp.find((p: Amico) => p.idUtente === data2.idUtente);
           console.log("mittente: " + mittente.username)
           console.log("utenteLoggato: " + utenteLoggato.username)
+          //se esiste pusha semplicemente l'oggetto all'interno della lista amici del mittente
           if (utenteLoggato) {
             mittenteObj.listaAmici.push(utenteLoggato);
             this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => {
               this.ottieniUtente();
-
             });
           } else {
+            //altrimenti creami un oggetto amico e poi pushalo
             this.amicisrv.creaAmico(data2).subscribe(resp => {
               mittenteObj.listaAmici.push(resp);
               this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => {
@@ -101,7 +117,7 @@ export class NavbarComponent implements OnInit {
               });
             })
           }
-
+          //stessa cosa di sopra
           if (mittente) {
             this.utenteLoggato?.listaAmici.push(mittente);
             let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === idNotifica);
@@ -113,6 +129,7 @@ export class NavbarComponent implements OnInit {
               });
             });
           } else {
+            //------
             this.amicisrv.creaAmico(data).subscribe(resp => {
               this.utenteLoggato?.listaAmici.push(resp);
               let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === idNotifica);

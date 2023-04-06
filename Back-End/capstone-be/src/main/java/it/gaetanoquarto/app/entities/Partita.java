@@ -67,5 +67,6 @@ public class Partita {
 	
 	private String oraPartita;	
 	
-
+	@OneToOne
+	private Chat chat;
 }

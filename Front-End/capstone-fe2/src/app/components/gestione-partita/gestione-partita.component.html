@@ -130,4 +130,25 @@
     </div>
   </div>
 
+  <div class="container">
+    <div class="card" style="width: 100%; height: 60vh;">
+      <div class="card-body">
+        <h3 class="card-title fw-bolder mb-3">Bacheca</h3>
+        <div class="bg-chat rounded mb-4 p-2 overflow-auto" style="height: 35vh;">
+          <div *ngFor="let m of bacheca!.messaggi | orderBy: 'id' "  class="rounded d-flex nuvoletta"  [ngClass]="m.id_Utente === utente.id ? 'ms-auto bg-primary' : null">
+            <p class="mb-1 fw-bolder">{{m.id_Utente === utente.id ? 'Tu' : m.username_Utente}}</p>
+            <p class="mb-1">{{m.messaggio}}</p>
+            <div class="d-flex justify-content-between">
+              <p class="mb-0 me-5 fw-lighter subtitle">{{m.data}}</p>
+              <p class=" mb-0 fw-lighter subtitle">{{m.ora}}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="partecipanteEsistente" class="input-group shadow-sm">
+           <textarea class="form-control rounded-start" style="max-height: 10vh; height: 5vh;" aria-label="With textarea" #messaggio></textarea><button class="btn btn-blu" type="submit" (click)="invioMessaggio(messaggio.value)"><i class="bi bi-send"></i></button>
+        </div>
+        <p *ngIf="!partecipanteEsistente" class="text-center text-danger fw-bold">Per mandare un messaggio, unisciti alla partita!</p>
+      </div>
+    </div>
+  </div>
 </div>

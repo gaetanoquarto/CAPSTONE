@@ -16,6 +16,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { CentriSportiviComponent } from './components/admin-dashboard/centri-sportivi/centri-sportivi.component';
 import { CreaPartitaComponent } from './components/crea-partita/crea-partita.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderByPipe } from './pipe/order-by.pipe';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent,
     AdminDashboardComponent,
     CentriSportiviComponent,
-    CreaPartitaComponent
+    CreaPartitaComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,

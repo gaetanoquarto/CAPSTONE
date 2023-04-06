@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { StorageService } from 'src/app/auth/storage.service';
 import { Campo } from 'src/app/models/campo.interface';
 import { CentroSportivo } from 'src/app/models/centro-sportivo.interface';
+import { Chat } from 'src/app/models/chat.interface';
 import { Partita } from 'src/app/models/partita.interface';
 import { Provincia } from 'src/app/models/provincia.interface';
 import { Utente } from 'src/app/models/utente.interface';
 import { CentroSportivoService } from 'src/app/services/centro-sportivo.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { PartitaService } from 'src/app/services/partita.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
 import { UtenteService } from 'src/app/services/utente.service';
@@ -27,7 +29,7 @@ export class CreaPartitaComponent implements OnInit {
   user: Utente | undefined;
   listaPartecipanti: any[] = [];
 
-  constructor(private prtsrv: PartitaService, private router: Router,private cssrv: CentroSportivoService, private provsrv: ProvinciaService, private storagesrv: StorageService, private usrsrv: UtenteService) { }
+  constructor(private prtsrv: PartitaService, private router: Router,private cssrv: CentroSportivoService, private provsrv: ProvinciaService, private storagesrv: StorageService, private usrsrv: UtenteService, private chatsrv: ChatService) { }
 
   ngOnInit(): void {
     this.getOrganizzatore();
@@ -73,29 +75,36 @@ export class CreaPartitaComponent implements OnInit {
 
   async onsubmit(form: NgForm) {
     let CentriSportivi: CentroSportivo = JSON.parse(form.value.centroSportivo);
-   let data = {
-    centroSportivo: CentriSportivi,
-    campo: form.value.campo,
-    organizzatore: this.user!.username,
-    nomePartita: form.value.nome,
-    tipoPartita: form.value.tipo,
-    giornoPartita: form.value.giorno,
-    oraPartita: form.value.orario,
-    listaPartecipanti: this.listaPartecipanti,
-    citta: CentriSportivi.cittaCentroSportivo.provincia
-   }
-    try {
-      console.log(data);
-      await this.prtsrv.creaPartita(data).subscribe({
-        next: data => {
-          console.log(data);
-          form.reset();
-          this.router.navigate(['/gioca'])
-        }
-      })
-    } catch (error) {
-      console.error(error)
+    let chat: Partial<Chat> = {
+      messaggi: []
     }
+    this.chatsrv.creaChat(chat).subscribe(resp => {
+      let data = {
+        centroSportivo: CentriSportivi,
+        campo: form.value.campo,
+        organizzatore: this.user!.username,
+        nomePartita: form.value.nome,
+        tipoPartita: form.value.tipo,
+        giornoPartita: form.value.giorno,
+        oraPartita: form.value.orario,
+        listaPartecipanti: this.listaPartecipanti,
+        citta: CentriSportivi.cittaCentroSportivo.provincia,
+        chat: resp
+       }
+        try {
+          console.log(data);
+           this.prtsrv.creaPartita(data).subscribe({
+            next: data => {
+              console.log(data);
+              form.reset();
+              this.router.navigate(['/gioca'])
+            }
+          })
+        } catch (error) {
+          console.error(error)
+        }
+    })
+
   }
 
 }
