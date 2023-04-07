@@ -9,6 +9,8 @@ import { GestionePartitaComponent } from './components/gestione-partita/gestione
 import { HomeComponent } from './components/home/home.component';
 import { ListaPartiteComponent } from './components/lista-partite/lista-partite.component';
 import { ProfiloComponent } from './components/profilo/profilo.component';
+import { AuthRoutingModule } from './auth/auth-routing.module';
+
 
 const routes: Routes = [
   {
@@ -46,11 +48,18 @@ const routes: Routes = [
     path: 'user/:id',
     component: ProfiloComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+  AuthRoutingModule
+  ],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

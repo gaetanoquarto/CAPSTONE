@@ -79,7 +79,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  accettaAmicizia(idMittente: number, idNotifica: number) {
+  accettaAmicizia(idMittente: number, idNotifica: number, i: number) {
     //se esiste l'idMittente
     if (idMittente) {
       //recuperami l'utente per intero
@@ -101,11 +101,14 @@ export class NavbarComponent implements OnInit {
           let mittente: Amico = resp.find((p: Amico) => p.idUtente === data.idUtente);
           let utenteLoggato: Amico = resp.find((p: Amico) => p.idUtente === data2.idUtente);
           console.log("mittente: " + mittente.username)
-          console.log("utenteLoggato: " + utenteLoggato.username)
+          console.log("utenteLoggato: " + utenteLoggato!.username)
           //se esiste pusha semplicemente l'oggetto all'interno della lista amici del mittente
           if (utenteLoggato) {
             mittenteObj.listaAmici.push(utenteLoggato);
             this.usrsrv.aggiornaUtente(mittenteObj.id, mittenteObj).subscribe(resp => {
+              console.log(this.listaNotifiche[i].notifica)
+            this.listaNotifiche.splice(i, 1)
+             console.log(this.listaNotifiche);
               this.ottieniUtente();
             });
           } else {
@@ -117,15 +120,24 @@ export class NavbarComponent implements OnInit {
               });
             })
           }
-          //stessa cosa di sopra
+          //stessa cosa di sopra ma per l'utente collegato
           if (mittente) {
             this.utenteLoggato?.listaAmici.push(mittente);
+            //mi rimuovi la notifica dall'utente loggato
             let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === idNotifica);
             this.utenteLoggato?.notifiche.splice(rimuoviNotifica, 1);
+            //mandi nel database l'utente senza la notifica
             this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
               console.log(resp)
               this.nsrv.eliminaNotifica(idNotifica).subscribe( resp => {
+                //rimuovi la notifica dall'array
+                this.listaNotifiche.splice(i, 1)
+                console.log(this.listaNotifiche);
                 this.ottieniUtente();
+                //se non ci sono notifiche nell'array, mi setti il boolean "pieno" in falso
+                if(this.listaNotifiche.length === 0) {
+                  this.pieno = false
+                }
               });
             });
           } else {
@@ -133,10 +145,15 @@ export class NavbarComponent implements OnInit {
             this.amicisrv.creaAmico(data).subscribe(resp => {
               this.utenteLoggato?.listaAmici.push(resp);
               let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === idNotifica);
-              this.utenteLoggato?.notifiche.splice(rimuoviNotifica, 1)
+            this.utenteLoggato?.notifiche.splice(rimuoviNotifica, 1);
               this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
                 this.nsrv.eliminaNotifica(idNotifica).subscribe( resp => {
+                  this.listaNotifiche.splice(i, 1)
+                  console.log(this.listaNotifiche);
                   this.ottieniUtente();
+                  if(this.listaNotifiche.length === 0) {
+                    this.pieno = false
+                  }
                 });
               })
             })
@@ -147,7 +164,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  accettaInvitoPartita(partita: Partita, notificaId: number) {
+  accettaInvitoPartita(partita: Partita, notificaId: number, i: number) {
 
     let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === notificaId);
     this.utenteLoggato!.notifiche.splice(rimuoviNotifica, 1)
@@ -158,23 +175,35 @@ export class NavbarComponent implements OnInit {
           console.log(resp);
           this.parAccettata = true;
           this.nsrv.eliminaNotifica(notificaId).subscribe()
+          this.listaNotifiche.splice(i, 1)
+          if(this.listaNotifiche.length === 0) {
+            this.pieno = false
+          }
       })
     });
   }
 
-  rifiutaAmicizia(notificaId: number) {
+  rifiutaAmicizia(notificaId: number, i: number) {
     let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === notificaId);
     this.utenteLoggato!.notifiche.splice(rimuoviNotifica, 1)
     this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
       this.nsrv.eliminaNotifica(notificaId).subscribe(resp => console.log(resp));
+      this.listaNotifiche.splice(i, 1);
+      if(this.listaNotifiche.length === 0) {
+        this.pieno = false
+      }
     })
   }
 
-  rifiutaInvitoPartita(notificaId: number) {
+  rifiutaInvitoPartita(notificaId: number, i: number) {
     let rimuoviNotifica: any = this.utenteLoggato?.notifiche.findIndex(p => p.id === notificaId);
     this.utenteLoggato!.notifiche.splice(rimuoviNotifica, 1)
     this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(resp => {
       this.nsrv.eliminaNotifica(notificaId).subscribe(resp => console.log(resp));
+      this.listaNotifiche.splice(i, 1)
+      if(this.listaNotifiche.length === 0) {
+        this.pieno = false
+      }
     })
   }
 
