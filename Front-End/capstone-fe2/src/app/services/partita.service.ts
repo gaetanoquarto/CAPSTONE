@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Partita } from '../models/partita.interface';
+import { Campo } from '../models/campo.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class PartitaService {
 
   eliminaPartita(id: number): Observable<Partita> {
     return this.http.delete<Partita>(`http://localhost:8080/api/partite/${id}`)
+  }
+
+  getListaCampi(): Observable<Campo[]> {
+    return this.http.get<Campo[]>(`http://localhost:8080/api/campi`)
   }
 }

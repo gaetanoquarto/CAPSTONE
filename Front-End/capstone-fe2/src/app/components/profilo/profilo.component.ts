@@ -26,6 +26,7 @@ export class ProfiloComponent implements OnInit {
   constructor(private ar: ActivatedRoute, private usrsrv: UtenteService, private storagesrv: StorageService, private notsrv: NotificaService) { }
 
   ngOnInit(): void {
+    console.log(this.storagesrv.loggedId)
     this.ottieniUtente();
   }
 
@@ -97,20 +98,6 @@ export class ProfiloComponent implements OnInit {
     console.log(immagine);
     this.utente!.immagineProfilo = immagine;
     console.log(this.utente)
-    // let data: Utente = {
-    //   id: this.utente!.id,
-    //   nome: this.utente!.nome,
-    //   cognome: this.utente!.cognome,
-    //   residenzaId: this.utente!.residenzaId,
-    //   residenza: this.utente!.residenza,
-    //   email: this.utente!.email,
-    //   username: this.utente!.username,
-    //   password: this.utente!.password,
-    //   attivo: this.utente!.attivo,
-    //   immagineProfilo: immagine,
-    //   notifiche: this.utente!.notifiche,
-    //   listaAmici: this.utente!.listaAmici
-    // }
     this.usrsrv.aggiornaUtente(this.utente!.id, this.utente!).subscribe(resp => {
       console.log(resp)
       let input = document.getElementById('immagine') as HTMLInputElement;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/auth/storage.service';
+import { Campo } from 'src/app/models/campo.interface';
 import { Chat } from 'src/app/models/chat.interface';
 import { Messaggio } from 'src/app/models/messaggio.interface';
 import { Notifica } from 'src/app/models/notifica.interface';
@@ -31,12 +32,15 @@ export class GestionePartitaComponent implements OnInit {
   esiste: boolean = false;
   invitatoConSuccesso: boolean = false;
   bacheca: Chat | undefined;
-  usernameChat: string | undefined
+  usernameChat: string | undefined;
+  listaCampi: Campo[] | undefined = [];
+
 
   constructor(private ar: ActivatedRoute, private parsrv: PartitaService, private storagesrv: StorageService, private usrsrv: UtenteService, private router: Router, private ntfsrv: NotificaService, private messrv: MessaggioService, private chatsrv: ChatService) { }
 
   ngOnInit(): void {
     this.ottieniPartita();
+    this.getCampi();
   }
 
   ottieniPartita(): void {
@@ -273,6 +277,12 @@ ottieniOra(orario: Date) {
       } else {
         return 'assets/img/sample-user.png';
       }
+  }
+
+  getCampi() {
+    this.parsrv.getListaCampi().subscribe(resp => {
+      this.listaCampi = resp;
+    })
   }
 
 }

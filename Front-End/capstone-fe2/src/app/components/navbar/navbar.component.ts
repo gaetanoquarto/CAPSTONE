@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   parAccettata: boolean = false;
   loggedIn: boolean = false;
 
-  constructor(private usrsrv: UtenteService, private route: Router, private storagesrv: StorageService, private nsrv: NotificaService, private amicisrv: ListaAmiciService, private parsrv: PartitaService, public authsrv: AuthService) { }
+  constructor(private usrsrv: UtenteService, private route: Router, public storagesrv: StorageService, private nsrv: NotificaService, private amicisrv: ListaAmiciService, private parsrv: PartitaService, public authsrv: AuthService) { }
 
   ngOnInit(): void {
       this.ottieniUtente();
@@ -218,7 +218,6 @@ export class NavbarComponent implements OnInit {
         this.ottieniNotifiche();
       })
     }
-
   }
 
   logout() {

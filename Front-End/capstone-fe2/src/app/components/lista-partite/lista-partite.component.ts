@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/auth/storage.service';
+import { Campo } from 'src/app/models/campo.interface';
 import { Partita } from 'src/app/models/partita.interface';
 import { Provincia } from 'src/app/models/provincia.interface';
 import { Utente } from 'src/app/models/utente.interface';
@@ -27,7 +28,7 @@ export class ListaPartiteComponent implements OnInit {
   nMaxPartecipanti: any;
   organizzatore: any;
   datiOrganizzatore: Utente | undefined;
-
+  listaCampi: Campo [] | undefined = [];
 
 
   todayDate: string = "";
@@ -36,6 +37,7 @@ export class ListaPartiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCitta();
+    this.getCampi();
   }
 
   getTodayDate(): void {
@@ -159,6 +161,12 @@ export class ListaPartiteComponent implements OnInit {
     this.residenzaSelezionata = residenza;
     console.log(this.residenzaSelezionata)
     this.getPartite();
+  }
+
+  getCampi() {
+    this.parsrv.getListaCampi().subscribe(resp => {
+      this.listaCampi = resp;
+    })
   }
 }
 

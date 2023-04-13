@@ -46,7 +46,7 @@
               <a class="nav-link" [routerLink]="['/gioca']" routerLinkActive="router-link-active">Gioca</a>
             </li>
             <li class="nav-item d-lg-none">
-              <a class="nav-link" [routerLink]="['/user/', utenteLoggato?.id]" routerLinkActive="router-link-active">Profilo</a>
+              <a class="nav-link" [routerLink]="['/user', storagesrv.loggedId]" routerLinkActive="router-link-active">Profilo</a>
             </li>
           </ul>
 
@@ -88,7 +88,7 @@
           <a class="text-decoration-none me-2 nav-link" *ngIf="!authsrv.isLoggedIn" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
           <a class=" text-decoration-none me-2 nav-link" *ngIf="!authsrv.isLoggedIn" [routerLink]="['/register']" routerLinkActive="router-link-active">Registrati</a>
 
-          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', utenteLoggato?.id]" *ngIf="authsrv.isLoggedIn" routerLinkActive="active"><i class="bi bi-person"></i></a>
+          <a class="btn btn-blu me-2 d-none d-lg-inline" [routerLink]="['/user/', storagesrv.loggedId]" *ngIf="authsrv.isLoggedIn" routerLinkActive="active"><i class="bi bi-person"></i></a>
 
           <button class="btn btn-danger d-none d-lg-inline me-2" (click)="logout()" *ngIf="authsrv.isLoggedIn"><i class="bi bi-box-arrow-right"></i></button>
 

@@ -10,6 +10,8 @@ const USER_KEY = 'auth-user';
 export class StorageService {
   constructor(private router: Router) {}
 
+  loggedId: number | undefined;
+
   clean(): void {
     window.sessionStorage.clear();
   }
