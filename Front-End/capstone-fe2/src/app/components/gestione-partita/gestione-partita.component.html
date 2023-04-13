@@ -2,7 +2,7 @@
   <a [routerLink]="['/gioca']" class="btn indietro m-2"><i class="bi bi-arrow-left-circle-fill h2"></i></a>
   <div class="container d-flex text-center align-items-center justify-content-evenly p-3">
     <div class="card border-0 shadow text-blu">
-      <img *ngIf="datiPartita" src="https://fratellianastasi.it/wp-content/uploads/2017/11/C5-2-2015-Campo-Calcetto-in-erba-sintetica-San-Filippo-d.-M.-ME.jpg" class="card-img-top shadow align-self-center m-2 rounded" alt="..." style="width: 40%;">
+      <img *ngIf="datiPartita" src="{{partita?.campo === 'CALCIOA5' ? partita?.centroSportivo!.listaCampi[0].immagine : partita?.campo === 'CALCIOA6' ? partita?.centroSportivo!.listaCampi[1].immagine : partita?.campo === 'CALCIOA7' ? partita?.centroSportivo!.listaCampi[2].immagine : null}}" class="card-img-top shadow align-self-center m-2 rounded" alt="..." style="width: 40%;">
       <div *ngIf="datiPartita" class="card-body">
         <h3 class="card-title fw-bolder">{{partita?.nomePartita}}</h3>
         <h6 class="card-subtitle fw-semibold mb-2"><i class="bi bi-person-check-fill"></i> {{partita?.organizzatore}}</h6>
@@ -34,9 +34,9 @@
         <form #form="ngForm" (ngSubmit)="onsubmit(form, partita!.id)">
           <div class="form-floating form-group mb-3">
            <select name="campo" id="campo" class="form-select" placeholder="campo" required [(ngModel)]="partita!.campo">
-             <option *ngFor="let campo of partita?.centroSportivo?.listaCampi" value="{{campo.tipoCampo}}" >{{campo.tipoCampo}}</option>
+             <option *ngFor="let campo of partita?.centroSportivo?.listaCampi" value="{{campo.tipoCampo}}">{{campo.tipoCampo}}</option>
            </select>
-           <label for="centroSportivo">Seleziona Campo</label>
+           <label for="campo">Seleziona Campo</label>
            </div>
          <div class="form-group mb-3">
            <p class="m-1">Seleziona giorno</p>
@@ -59,7 +59,7 @@
              <option value="22.00-23.00">22.00-23.00</option>
              <option value="23.00-00.00">23.00-00.00</option>
            </select>
-          <label for="residenza"><i class="bi bi-person"></i>Seleziona Ora</label>
+          <label for="orario">Seleziona Ora</label>
          </div>
 
          <div class="form-floating form-group mb-3">
@@ -71,7 +71,7 @@
              <option value="PUBBLICA">PUBBLICA</option>
              <option value="PRIVATA">PRIVATA</option>
            </select>
-          <label for="residenza">Tipo partita</label>
+          <label for="tipo">Tipo partita</label>
          </div>
          <button type="submit" class="btn btn-danger rounded-5 px-5" [disabled]="form.invalid">Modifica partita</button>
        </form>

@@ -8,7 +8,7 @@
           <select name="citta" id="citta" class="form-select" placeholder="Città" required ngModel>
             <option *ngFor="let p of arrayProvince" value="{{p | json}}">{{p.provincia}}</option>
           </select>
-         <label for="citta"><i class="bi bi-person"></i>Residenza</label>
+         <label for="citta">Luogo</label>
         </div>
         <button type="submit" class="btn btn-success rounded-5 px-5" [disabled]="scegliCitta.invalid">seleziona città</button>
       </form>
@@ -48,7 +48,7 @@
             <option value="22.00-23.00">22.00-23.00</option>
             <option value="23.00-00.00">23.00-00.00</option>
           </select>
-         <label for="residenza"><i class="bi bi-person"></i>Seleziona Ora</label>
+         <label for="residenza">Seleziona Ora</label>
         </div>
 
         <div class="form-floating form-group mb-3">

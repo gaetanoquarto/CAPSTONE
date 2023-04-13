@@ -1,7 +1,12 @@
 <div class="container-fluid text-center p-0">
   <div class="space p-5 text-white">
     <h1>{{loggato ? "Il mio Profilo" : "Profilo utente"}}</h1>
-    <img src="https://pro.statsports.com/wp-content/uploads/2020/02/Goalkeeper.jpg" class="rounded-5 mx-auto d-block mb-3" style="width: 15%;">
+    <div class="position-relative">
+    <img src="{{utente?.immagineProfilo ? utente?.immagineProfilo : 'assets/img/sample-user.png'}}" class="rounded-5 mx-auto d-block mb-3" style="width: 15%;"><button (click)="modifica=true;" class="modifica"><i class="bi bi-pencil-square h1"></i></button>
+  </div>
+  <div *ngIf="modifica" class="input-group mb-3 m-auto" style="width: 30%;">
+    <input type="text" class="form-control" id="immagine" #immagine placeholder="Inserisci l'URL..." aria-label="immagine"><button (click)="modificaFoto(immagine.value)" class="btn btn-blu"><i class="bi bi-check h5 m-0"></i></button>
+  </div>
   <h3>{{utente?.username}} <button *ngIf="!loggato && !richiesta" class="btn btn-success" (click)="inviaAmicizia()"><i class="bi bi-person-add"></i></button><button *ngIf="!loggato && richiesta" class="btn btn-danger" (click)="rimuoviAmico()"><i class="bi bi-person-dash"></i></button></h3>
   <p class="text-blu"><i class="bi bi-person h3"></i> <span class="text-white">{{utente?.nome}} {{utente?.cognome}}</span></p>
   <p class="text-blu"><i class="bi bi-envelope-at h3"></i> <span class="text-white"> {{utente?.email}}</span></p>

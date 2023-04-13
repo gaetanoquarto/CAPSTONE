@@ -82,6 +82,7 @@ public class PartitaController {
 		partita.setGiornoPartita(_partita.getGiornoPartita());
 		partita.setOraPartita(_partita.getOraPartita());
 		partita.setListaPartecipanti(_partita.getListaPartecipanti());
+		partita.setCampo(_partita.getCampo());
 		ps.save(partita);
 		
 		return new ResponseEntity<Object>(partita, HttpStatus.CREATED);

@@ -21,6 +21,7 @@ export class ProfiloComponent implements OnInit {
   richiesta: boolean = false;
   utenteLoggato: Utente | undefined;
   routeSub!: Subscription;
+  modifica: boolean = false;
 
   constructor(private ar: ActivatedRoute, private usrsrv: UtenteService, private storagesrv: StorageService, private notsrv: NotificaService) { }
 
@@ -37,13 +38,13 @@ export class ProfiloComponent implements OnInit {
       console.log(this.utenteLoggato);
       let checkAmico = this.utenteLoggato?.listaAmici.filter(p => p.idUtente === this.utente?.id);
       console.log(checkAmico);
-      if(checkAmico.length !== 0) {
+      if (checkAmico.length !== 0) {
         this.richiesta = true;
       } else {
         this.richiesta = false;
       }
     })
-    if(this.idLoggato === this.utente?.id) {
+    if (this.idLoggato === this.utente?.id) {
       this.loggato = true;
     } else {
       this.loggato = false;
@@ -54,41 +55,67 @@ export class ProfiloComponent implements OnInit {
   ottieniUtente(): void {
     this.routeSub = this.ar.params.subscribe(params => {
       const x = +params['id'];
-      this.usrsrv.getUtente(x).subscribe( resp => {
+      this.usrsrv.getUtente(x).subscribe(resp => {
         this.utente = resp;
         console.log(this.utente);
         this.ottieniUtenteLoggato();
       })
     });
-    }
+  }
 
-    rimuoviAmico() {
-     let amicoDaRimuovere = this.utenteLoggato?.listaAmici.findIndex(u => u.idUtente === this.utente?.id);
-     let amicoDaRimuovere2 = this.utente?.listaAmici.findIndex(u => u.idUtente === this.utenteLoggato?.id);
-     console.log(amicoDaRimuovere)
-     console.log(this.utenteLoggato?.listaAmici)
-     this.utenteLoggato?.listaAmici.splice(amicoDaRimuovere!, 1)
-     this.utente?.listaAmici.splice(amicoDaRimuovere2!, 1)
-     this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe( res => {
+  rimuoviAmico() {
+    let amicoDaRimuovere = this.utenteLoggato?.listaAmici.findIndex(u => u.idUtente === this.utente?.id);
+    let amicoDaRimuovere2 = this.utente?.listaAmici.findIndex(u => u.idUtente === this.utenteLoggato?.id);
+    console.log(amicoDaRimuovere)
+    console.log(this.utenteLoggato?.listaAmici)
+    this.utenteLoggato?.listaAmici.splice(amicoDaRimuovere!, 1)
+    this.utente?.listaAmici.splice(amicoDaRimuovere2!, 1)
+    this.usrsrv.aggiornaUtente(this.utenteLoggato!.id, this.utenteLoggato!).subscribe(res => {
       this.usrsrv.aggiornaUtente(this.utente!.id, this.utente!).subscribe(res => {
         this.ottieniUtente();
       })
-     })
-    }
-
-
-    inviaAmicizia(): void {
-      let notifica: Partial<Notifica> = {
-        tipoNotifica: "RICHIESTA_AMICIZIA",
-        idMittente: this.idLoggato!,
-        idDestinatario: this.utente!.id
-      }
-      this.notsrv.creaNotifica(notifica).subscribe(resp => {
-        console.log(resp);
-        this.utente?.notifiche.push(resp);
-        this.usrsrv.aggiornaUtente(this.utente!.id, this.utente!).subscribe(resp => {
-          this.ottieniUtente();
-        })
-      })
-    }
+    })
   }
+
+
+  inviaAmicizia(): void {
+    let notifica: Partial<Notifica> = {
+      tipoNotifica: "RICHIESTA_AMICIZIA",
+      idMittente: this.idLoggato!,
+      idDestinatario: this.utente!.id
+    }
+    this.notsrv.creaNotifica(notifica).subscribe(resp => {
+      console.log(resp);
+      this.utente?.notifiche.push(resp);
+      this.usrsrv.aggiornaUtente(this.utente!.id, this.utente!).subscribe(resp => {
+        this.ottieniUtente();
+      })
+    })
+  }
+
+  modificaFoto(immagine: string) {
+    console.log(immagine);
+    this.utente!.immagineProfilo = immagine;
+    console.log(this.utente)
+    // let data: Utente = {
+    //   id: this.utente!.id,
+    //   nome: this.utente!.nome,
+    //   cognome: this.utente!.cognome,
+    //   residenzaId: this.utente!.residenzaId,
+    //   residenza: this.utente!.residenza,
+    //   email: this.utente!.email,
+    //   username: this.utente!.username,
+    //   password: this.utente!.password,
+    //   attivo: this.utente!.attivo,
+    //   immagineProfilo: immagine,
+    //   notifiche: this.utente!.notifiche,
+    //   listaAmici: this.utente!.listaAmici
+    // }
+    this.usrsrv.aggiornaUtente(this.utente!.id, this.utente!).subscribe(resp => {
+      console.log(resp)
+      let input = document.getElementById('immagine') as HTMLInputElement;
+      input.value = "";
+      this.modifica = false;
+    })
+  }
+}

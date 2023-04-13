@@ -60,7 +60,7 @@ export class GestionePartitaComponent implements OnInit {
 onsubmit(form: NgForm, partitaId: number) {
   console.log(form.value)
   if(form.valid) {
-    let data = {
+    let data: Partita = {
       id: this.partita!.id,
       centroSportivo : this.partita!.centroSportivo,
       campo : form.value.campo,

@@ -35,4 +35,6 @@ public class Campo {
 	
 	private int maxPartecipanti;
 	
+	private String immagine;
+	
 }
