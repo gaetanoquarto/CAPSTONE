@@ -190,8 +190,6 @@ checkAlCompleto(): void {
       this.invitatoConSuccesso = true;
       })
         })
-
-
     }
 
   }
@@ -268,5 +266,13 @@ ottieniOra(orario: Date) {
     }
   }
 
+  ottieniImmagineProfilo(idUtenteMessaggio: number): any {
+      let utente = this.partita?.listaPartecipanti.find(u => u.id === idUtenteMessaggio);
+      if(utente?.immagineProfilo !== null) {
+        return utente!.immagineProfilo;
+      } else {
+        return 'assets/img/sample-user.png';
+      }
+  }
 
 }

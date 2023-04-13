@@ -103,6 +103,8 @@
     </div>
   </div>
 
+  <!--SEZIONE INVITO AMICI-->
+
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Invita amici</h5>
@@ -130,17 +132,24 @@
     </div>
   </div>
 
+  <!--SEZIONE CHAT-->
+
   <div class="container">
     <div class="card" style="width: 100%; height: 60vh;">
       <div class="card-body">
         <h3 class="card-title fw-bolder mb-3">Bacheca</h3>
         <div class="bg-chat rounded mb-4 p-2 overflow-auto" style="height: 35vh;">
-          <div *ngFor="let m of bacheca!.messaggi | orderBy: 'id' "  class="rounded d-flex nuvoletta"  [ngClass]="m.id_Utente === utente.id ? 'ms-auto bg-primary' : null">
-            <p class="mb-1 fw-bolder">{{m.id_Utente === utente.id ? 'Tu' : m.username_Utente}}</p>
-            <p class="mb-1">{{m.messaggio}}</p>
-            <div class="d-flex justify-content-between">
-              <p class="mb-0 me-5 fw-lighter subtitle">{{m.data}}</p>
-              <p class=" mb-0 fw-lighter subtitle">{{m.ora}}</p>
+          <div *ngFor="let m of bacheca!.messaggi | orderBy: 'id' ;" class="d-flex flex-row align-items-center">
+            <div [ngClass]="m.id_Utente === utente.id ? 'd-none' : null" class="d-flex justify-content-center">
+              <img src="{{ottieniImmagineProfilo(m.id_Utente)}}" class="rounded-circle shadow-sm" style="width: 80%; height: 5vh;" >
+            </div>
+            <div class="rounded d-flex nuvoletta"  [ngClass]="m.id_Utente === utente.id ? 'ms-auto bg-primary' : null">
+              <p class="mb-1 fw-bolder">{{m.id_Utente === utente.id ? 'Tu' : m.username_Utente}}</p>
+              <p class="mb-1">{{m.messaggio}}</p>
+              <div class="d-flex justify-content-between">
+                <p class="mb-0 me-5 fw-lighter subtitle">{{m.data}}</p>
+                <p class=" mb-0 fw-lighter subtitle">{{m.ora}}</p>
+            </div>
             </div>
           </div>
         </div>
