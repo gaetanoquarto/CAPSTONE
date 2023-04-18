@@ -211,10 +211,10 @@ export class NavbarComponent implements OnInit {
    ottieniUtente() {
     let userId = this.storagesrv.getUser().id;
     if(userId) {
+      this.authsrv.isLoggedIn = true;
       this.usrsrv.getUtente(userId).subscribe(resp => {
         console.log(resp);
         this.utenteLoggato = resp;
-        this.authsrv.isLoggedIn = true;
         this.ottieniNotifiche();
       })
     }

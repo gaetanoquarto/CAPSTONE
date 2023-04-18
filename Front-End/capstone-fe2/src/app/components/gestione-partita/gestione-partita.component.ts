@@ -34,6 +34,7 @@ export class GestionePartitaComponent implements OnInit {
   bacheca: Chat | undefined;
   usernameChat: string | undefined;
   listaCampi: Campo[] | undefined = [];
+  listaUtenti: Utente[] | undefined = [];
 
 
   constructor(private ar: ActivatedRoute, private parsrv: PartitaService, private storagesrv: StorageService, private usrsrv: UtenteService, private router: Router, private ntfsrv: NotificaService, private messrv: MessaggioService, private chatsrv: ChatService) { }
@@ -41,6 +42,7 @@ export class GestionePartitaComponent implements OnInit {
   ngOnInit(): void {
     this.ottieniPartita();
     this.getCampi();
+    this.ottieniUtenti();
   }
 
   ottieniPartita(): void {
@@ -270,8 +272,14 @@ ottieniOra(orario: Date) {
     }
   }
 
+  ottieniUtenti() {
+    this.usrsrv.getUtenti().subscribe(resp => {
+      this.listaUtenti = resp;
+    })
+  }
+
   ottieniImmagineProfilo(idUtenteMessaggio: number): any {
-      let utente = this.partita?.listaPartecipanti.find(u => u.id === idUtenteMessaggio);
+      let utente = this.listaUtenti?.find(u => u.id === idUtenteMessaggio);
       if(utente?.immagineProfilo !== null) {
         return utente!.immagineProfilo;
       } else {

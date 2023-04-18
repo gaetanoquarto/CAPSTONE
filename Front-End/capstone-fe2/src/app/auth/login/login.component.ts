@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private usrsrv: AuthService, private router: Router, public storageService: StorageService) { }
+  constructor(public usrsrv: AuthService, private router: Router, public storageService: StorageService) { }
 
   ngOnInit(): void {
     if(this.storageService.isLoggedIn()) {
