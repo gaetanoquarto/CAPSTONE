@@ -220,6 +220,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  redirectToProfile() {
+    let userId = this.storagesrv.getUser().id;
+    console.log(userId)
+      this.route.navigateByUrl(`/user/${userId}`);
+  }
+
   logout() {
     this.authsrv.logout();
     this.authsrv.isLoggedIn = false;

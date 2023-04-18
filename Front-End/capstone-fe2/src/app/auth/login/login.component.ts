@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
           this.isLoggedIn = true;
           this.usrsrv.isLoggedIn = true;
           this.roles = this.storageService.getUser().roles;
-          this.storageService.loggedId = data.id;
-          console.log(this.storageService.loggedId)
+          // this.storageService.loggedId = data.id;
+          // console.log(this.storageService.loggedId)
           this.router.navigate(['/gioca'])
         }
       })
