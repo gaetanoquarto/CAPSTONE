@@ -53,7 +53,8 @@
             <p class="text-secondary fw-semibold"><i class="bi bi-geo-alt-fill"></i> {{partite.centroSportivo.nomeCentroSportivo}} | {{partite.citta}}</p>
             <h5 class="card-text fw-semibold text-blu"><i class="bi bi-person-check-fill"></i> {{partite.organizzatore}}</h5>
           </div>
-          <span class="etichetta p-1"><p class="card-text align-bottom">{{partite.campo}}</p></span>
+          <span class="etichetta p-1 mb-2"><p class="card-text align-bottom">{{partite.campo}}</p></span>
+          <span [ngClass]="partite.tipoPartita === 'PUBBLICA' ? 'text-verde' : 'text-danger'" class="p-1"><p class="card-text align-bottom">{{partite.tipoPartita}}</p></span>
         </div>
       </div>
       <div class="card-footer">
@@ -63,8 +64,9 @@
           <p class="card-subtitle  text-secondary"><i class="bi bi-clock"></i> {{partite.oraPartita}}</p>
         </div>
         <div>
-        <a *ngIf="!checkOrganizzatore(partite)" class="btn btn-blu me-2" [routerLink]="['/partita', partite.id]">Visualizza</a>
-        <a *ngIf="!partecipanteEsistente && !checkOrganizzatore(partite)" class="btn btn-verde w-75" (click)="partecipaPartita(partite.id)">partecipa</a>
+        <!-- <a *ngIf="partite.tipoPartita === 'PRIVATA'" class="btn btn-verde w-75">Richiedi accesso</a> -->
+        <a *ngIf="!checkOrganizzatore(partite) && partite.tipoPartita === 'PUBBLICA'" class="btn btn-blu me-2" [routerLink]="['/partita', partite.id]">Visualizza</a>
+        <a *ngIf="!partecipanteEsistente && !checkOrganizzatore(partite) && partite.tipoPartita === 'PUBBLICA'" class="btn btn-verde w-75" (click)="partecipaPartita(partite.id)">partecipa</a>
         <a *ngIf="partecipanteEsistente && !checkOrganizzatore(partite)" class="btn btn-arancione w-75" (click)="annullaPrenotazione(partite.id)">Annulla prenotazione</a>
         <a *ngIf="checkOrganizzatore(partite)" class="btn btn-arancione me-2" (click)="eliminaPartita(partite.id)"><i class="bi bi-trash"></i></a>
         <a *ngIf="checkOrganizzatore(partite)" class="btn btn-blu w-75" [routerLink]="['/partita', partite.id]">Gestisci Partita</a>
